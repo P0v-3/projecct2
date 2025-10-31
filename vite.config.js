@@ -5,4 +5,4 @@ export default defineConfig({
   plugins: [react()],
   // IMPORTANT for GitHub Pages (repo name as base)
   base: '/projecct2/',
-})
+}
