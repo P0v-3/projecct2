@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<style>
+
+body{
+    background:white;
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+}
+
+/* container for positioning */
+.scene{
+    position:relative;
+    width:600px;
+    height:400px;
+}
+
+/* left image */
+.img1{
+    position:absolute;
+    width:180px;
+    left:0px;
+    top:130px;
+         border-radius: 10%;
+}
+
+/* right image (in front) */
+.img2{
+    position:absolute;
+    width:180px;
+    right:120px;
+    top:140px;
+    z-index:2;
+     border-radius: 10%;
+}
+
+/* rotating top image */
+.img3{
+    position:absolute;
+    width:210px;
+    left:60px;
+    top:10px;
+    transform-origin:bottom right;
+    animation: swing 1s ease-in-out infinite;
+    z-index:3;
+}
+
+/* rotation animation */
+@keyframes swing{
+    0%{transform:rotate(0deg);}
+    50%{transform:rotate(100deg);}
+    100%{transform:rotate(0deg);}
+}
+
+</style>
+</head>
+
+<body onclick="window.location='hai.html'">
+
+<div class="scene">
+
+<img class="img1" src="https://preview.redd.it/freaky-joker-joker-tongue-out-manually-cleaned-up-crop-in-v0-3qegwopj2feg1.png?width=640&crop=smart&auto=webp&s=a6fd105db2b724f08340d512f31e7d0012427eaa">
+<img class="img2" src="https://fatson-toddplushies.com/wp-content/uploads/2025/11/Fat-Jason-Todd-Plush-bg-1762948768-300x300.png"> 
+<img class="img3" src="img3">
+
+</div>
+
+</body>
+</html>
