@@ -11,16 +11,15 @@
     }
 
     :root {
-      --bg1: #0f0a0b;
-      --bg2: #1c1013;
-      --panel: #f7f0e8;
-      --ink: #111111;
-      --red: #c1121f;
-      --red2: #8f0d18;
-      --cream: #fff8ef;
-      --yellow: #ffd54a;
-      --green: #42d77d;
-      --shadow: rgba(0,0,0,0.35);
+      --bg1: #f4eee6;
+      --bg2: #ddd1c5;
+      --paper: rgba(255, 250, 244, 0.88);
+      --ink: #4a3f39;
+      --soft: #6f6159;
+      --accent: #8e6a74;
+      --accent2: #7f96a8;
+      --line: rgba(95, 78, 69, 0.15);
+      --shadow: rgba(80, 63, 53, 0.16);
     }
 
     body {
@@ -31,10 +30,10 @@
       justify-content: center;
       align-items: center;
       padding: 18px;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Trebuchet MS", Arial, sans-serif;
       background:
-        radial-gradient(circle at 15% 15%, rgba(193,18,31,0.18), transparent 24%),
-        radial-gradient(circle at 85% 20%, rgba(66,215,125,0.08), transparent 18%),
+        radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(142, 106, 116, 0.16), transparent 24%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
       position: relative;
     }
@@ -44,120 +43,103 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 12px 12px;
-      opacity: 0.16;
-      mix-blend-mode: screen;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 27px,
+          rgba(100, 85, 78, 0.04) 28px
+        );
+      opacity: 0.55;
     }
 
     .sticker {
       position: fixed;
       z-index: 1;
-      width: clamp(72px, 13vw, 130px);
+      width: clamp(68px, 11vw, 124px);
       pointer-events: none;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.28));
       user-select: none;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
+      opacity: 0.96;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      animation: stickerFloat 2.4s ease-in-out infinite;
     }
 
-    .sticker.left {
-      left: 14px;
-      top: 12px;
-      transform: rotate(-10deg);
+    .sticker.changing {
+      opacity: 0.35;
     }
 
-    .sticker.right {
-      right: 14px;
-      bottom: 14px;
-      transform: rotate(10deg);
-      width: clamp(82px, 15vw, 140px);
+    .sticker.tl { top: 10px; left: 10px; }
+    .sticker.tr { top: 10px; right: 10px; }
+    .sticker.bl { bottom: 10px; left: 10px; }
+    .sticker.br { bottom: 10px; right: 10px; }
+
+    .sticker.tl { --rot: -8deg; --dx: -2px; --dy: 3px; }
+    .sticker.tr { --rot: 8deg; --dx: 2px; --dy: 2px; }
+    .sticker.bl { --rot: 6deg; --dx: -3px; --dy: -2px; }
+    .sticker.br { --rot: -6deg; --dx: 3px; --dy: -2px; }
+
+    @keyframes stickerFloat {
+      0%   { transform: rotate(var(--rot)) translate(0px, 0px); }
+      25%  { transform: rotate(calc(var(--rot) - 1.2deg)) translate(var(--dx), var(--dy)); }
+      50%  { transform: rotate(calc(var(--rot) + 1deg)) translate(calc(var(--dx) * -0.5), calc(var(--dy) * -0.5)); }
+      75%  { transform: rotate(calc(var(--rot) - 0.8deg)) translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.4)); }
+      100% { transform: rotate(var(--rot)) translate(0px, 0px); }
     }
 
     .card {
       position: relative;
       z-index: 2;
       width: min(92vw, 560px);
-      background: var(--panel);
-      border: 4px solid var(--ink);
-      border-radius: 24px;
-      padding: 24px 18px 20px;
+      background: var(--paper);
+      backdrop-filter: blur(8px);
+      border: 1.5px solid var(--line);
+      border-radius: 28px;
+      padding: 26px 18px 20px;
       box-shadow:
-        0 0 0 6px var(--red),
-        0 20px 45px var(--shadow);
-      overflow: hidden;
+        0 18px 40px var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,0.72);
       cursor: pointer;
-      transition: transform 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px) rotate(-0.4deg);
-      box-shadow:
-        0 0 0 6px var(--red),
-        0 26px 55px rgba(0,0,0,0.42);
+      overflow: hidden;
     }
 
     .card::before {
-      content: "BAM!";
+      content: "";
       position: absolute;
-      top: 10px;
-      left: 12px;
-      color: var(--yellow);
-      font-size: 18px;
-      font-weight: 900;
-      text-shadow:
-        -2px -2px 0 #000,
-         2px -2px 0 #000,
-        -2px  2px 0 #000,
-         2px  2px 0 #000;
-      transform: rotate(-10deg);
-    }
-
-    .card::after {
-      content: "!!!";
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      color: var(--red);
-      font-size: 28px;
-      font-weight: 900;
-      text-shadow:
-        -2px -2px 0 #000,
-         2px -2px 0 #000,
-        -2px  2px 0 #000,
-         2px  2px 0 #000;
-      transform: rotate(8deg);
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(127,143,161,0.10), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(138,90,98,0.08), transparent 26%);
+      pointer-events: none;
     }
 
     h1 {
-      margin: 10px 0 16px;
+      position: relative;
+      margin: 6px 0 18px;
       text-align: center;
-      color: var(--red);
+      color: var(--ink);
       font-size: clamp(28px, 6vw, 40px);
-      line-height: 1;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-shadow:
-        -2px -2px 0 #000,
-         2px -2px 0 #000,
-        -2px  2px 0 #000,
-         2px  2px 0 #000;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: 0.4px;
     }
 
     .message-box {
-      background: var(--cream);
-      border: 3px solid var(--ink);
-      border-radius: 18px;
+      position: relative;
+      background: rgba(255,255,255,0.62);
+      border: 1.5px solid rgba(90,72,63,0.12);
+      border-radius: 20px;
       padding: 16px;
-      box-shadow: inset 0 0 0 3px rgba(193,18,31,0.08);
       min-height: 120px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
     .message-box p {
       margin: 0;
-      color: #222;
+      color: var(--soft);
       font-size: 15px;
-      line-height: 1.65;
-      font-weight: 700;
+      line-height: 1.7;
+      font-weight: 600;
     }
 
     .action-row {
@@ -167,53 +149,54 @@
     }
 
     .crowbar-btn {
-      border: 3px solid var(--ink);
-      background: linear-gradient(180deg, #ff4154, var(--red));
+      border: 0;
+      background: linear-gradient(180deg, var(--accent2), var(--accent));
       color: white;
       border-radius: 18px;
       width: 72px;
-      height: 64px;
+      height: 62px;
       font-size: 28px;
       cursor: pointer;
-      box-shadow: 0 6px 0 var(--ink);
-      transition: transform 0.12s ease, box-shadow 0.12s ease;
+      box-shadow: 0 10px 22px rgba(127, 150, 168, 0.24);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
     }
 
     .crowbar-btn:hover {
-      transform: translateY(2px);
-      box-shadow: 0 4px 0 var(--ink);
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 14px 26px rgba(127, 150, 168, 0.28);
     }
 
     .crowbar-btn:active {
-      transform: translateY(5px);
-      box-shadow: 0 1px 0 var(--ink);
+      transform: scale(0.97);
+      opacity: 0.92;
     }
 
     .small-note {
       margin-top: 12px;
       text-align: center;
+      color: var(--soft);
       font-size: 12px;
-      font-weight: 800;
-      color: #4d4d4d;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: lowercase;
     }
 
     .confetti {
       position: fixed;
       top: -12px;
       width: 10px;
-      height: 18px;
-      opacity: 0.95;
+      height: 16px;
+      opacity: 0.9;
       z-index: 0;
       animation: fall linear forwards;
+      border-radius: 999px;
     }
 
     @keyframes fall {
-      0% {
+      from {
         transform: translateY(-10vh) rotate(0deg);
       }
-      100% {
+      to {
         transform: translateY(115vh) rotate(720deg);
       }
     }
@@ -221,41 +204,25 @@
     @media (max-width: 600px) {
       .card {
         padding: 22px 14px 18px;
+        border-radius: 24px;
       }
 
       .message-box {
+        min-height: 108px;
         padding: 14px;
-        min-height: 110px;
       }
 
       .message-box p {
         font-size: 14px;
       }
-
-      .sticker.left {
-        left: 8px;
-        top: 8px;
-      }
-
-      .sticker.right {
-        right: 8px;
-        bottom: 8px;
-      }
     }
   </style>
 </head>
 <body>
-  <img
-    class="sticker left"
-    src="https://ih1.redbubble.net/image.4304496734.6416/raf%2C360x360%2C075%2Ct%2Cfafafa%3Aca443f4786.u1.jpg"
-    alt="Jason Todd chibi sticker"
-  />
-
-  <img
-    class="sticker right"
-    src="https://e7.pngegg.com/pngimages/211/33/png-clipart-chibiusa-jason-todd-art-drawing-chibi-superhero-chibi.png"
-    alt="Jason Todd chibi"
-  />
+  <img class="sticker tl" id="sticker-tl" alt="">
+  <img class="sticker tr" id="sticker-tr" alt="">
+  <img class="sticker bl" id="sticker-bl" alt="">
+  <img class="sticker br" id="sticker-br" alt="">
 
   <audio id="partyblower" src="partyblower.mp3" preload="auto"></audio>
   <audio id="confettiSound" src="confetti.mp3" preload="auto"></audio>
@@ -265,9 +232,8 @@
 
     <div class="message-box">
       <p>
-        Write your paragraph here. Replace this with whatever you want to say —
-        sweet, funny, dramatic, chaotic, sentimental, or all of it together.
-        This whole box is just for your message.
+        Write your paragraph here. Replace this with whatever you actually want to say.
+        This area is just for your message.
       </p>
     </div>
 
@@ -284,25 +250,71 @@
     const birthdayCard = document.getElementById("birthdayCard");
     const giftButton = document.getElementById("giftButton");
 
+    const stickerEls = [
+      document.getElementById("sticker-tl"),
+      document.getElementById("sticker-tr"),
+      document.getElementById("sticker-bl"),
+      document.getElementById("sticker-br")
+    ];
+
+    const stickerFiles = [
+      "stickers1.png",
+      "stickers2.png",
+      "stickers3.png",
+      "stickers4.png",
+      "stickers5.png",
+      "stickers6.png",
+      "stickers7.png",
+      "stickers8.png",
+      "stickers9.png",
+      "stickers10.png"
+    ];
+
     let hasStarted = false;
+    let stickerInterval;
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function setStickerSet() {
+      const picks = shuffle(stickerFiles).slice(0, 4);
+      stickerEls.forEach((el) => el.classList.add("changing"));
+
+      setTimeout(() => {
+        stickerEls.forEach((el, i) => {
+          el.src = picks[i];
+        });
+      }, 140);
+
+      setTimeout(() => {
+        stickerEls.forEach((el) => el.classList.remove("changing"));
+      }, 220);
+    }
+
+    function startStickerCycle() {
+      setStickerSet();
+      stickerInterval = setInterval(setStickerSet, 3200);
+    }
 
     function spawnConfetti(count = 90) {
-      const colors = ["#c1121f", "#ffd54a", "#ffffff", "#42d77d", "#111111"];
-
+      const colors = ["#8e6a74", "#7f96a8", "#ffffff", "#d8c3a5", "#6f6159"];
       for (let i = 0; i < count; i++) {
         const piece = document.createElement("div");
         piece.className = "confetti";
         piece.style.left = Math.random() * 100 + "vw";
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2.6 + Math.random() * 2.4) + "s";
-        piece.style.animationDelay = (Math.random() * 0.8) + "s";
-        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
-        piece.style.borderRadius = Math.random() > 0.5 ? "2px" : "999px";
+        piece.style.animationDuration = (2.8 + Math.random() * 2.2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.7) + "s";
+        piece.style.width = (7 + Math.random() * 5) + "px";
+        piece.style.height = (12 + Math.random() * 8) + "px";
         document.body.appendChild(piece);
-
-        setTimeout(() => {
-          piece.remove();
-        }, 6000);
+        setTimeout(() => piece.remove(), 6000);
       }
     }
 
@@ -310,7 +322,7 @@
       blower.play().catch(() => {});
       setTimeout(() => {
         confettiSound.play().catch(() => {});
-      }, 220);
+      }, 180);
     }
 
     function goNext() {
@@ -320,22 +332,18 @@
     function startSurprise() {
       if (hasStarted) return;
       hasStarted = true;
-
       tryOpenSounds();
-
-      setTimeout(() => {
-        goNext();
-      }, 1400);
+      setTimeout(goNext, 1400);
     }
 
     window.addEventListener("load", () => {
+      startStickerCycle();
       spawnConfetti(110);
       tryOpenSounds();
     });
 
     birthdayCard.addEventListener("click", startSurprise);
-
-    giftButton.addEventListener("click", function (e) {
+    giftButton.addEventListener("click", (e) => {
       e.stopPropagation();
       startSurprise();
     });
