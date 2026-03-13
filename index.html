@@ -11,8 +11,8 @@
     }
 
     :root {
-      --bg1: #f4eee6;
-      --bg2: #ddd1c5;
+      --bg1: #b83312;
+      --bg2: #a4947e;
       --paper: rgba(255, 250, 244, 0.88);
       --ink: #4a3f39;
       --soft: #6f6159;
@@ -99,7 +99,6 @@
       box-shadow:
         0 18px 40px var(--shadow),
         inset 0 1px 0 rgba(255,255,255,0.72);
-      cursor: pointer;
       overflow: hidden;
     }
 
@@ -232,10 +231,10 @@
 
     <div class="message-box">
       <p>
-        TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY 
+        TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
         NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
         GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
-        THE PINATA!!!!                                                               -@fizavocadoes 😼
+        THE PINATA!!!! -@fizavocadoes 😼
       </p>
     </div>
 
@@ -243,13 +242,12 @@
       <button type="button" class="crowbar-btn" id="giftButton">🪓</button>
     </div>
 
-    <div class="small-note">tap anywhere</div>
+    <div class="small-note">tap the button</div>
   </div>
 
   <script>
     const blower = document.getElementById("partyblower");
     const confettiSound = document.getElementById("confettiSound");
-    const birthdayCard = document.getElementById("birthdayCard");
     const giftButton = document.getElementById("giftButton");
 
     const stickerEls = [
@@ -341,10 +339,8 @@
     window.addEventListener("load", () => {
       startStickerCycle();
       spawnConfetti(110);
-      tryOpenSounds();
     });
 
-    birthdayCard.addEventListener("click", startSurprise);
     giftButton.addEventListener("click", (e) => {
       e.stopPropagation();
       startSurprise();
