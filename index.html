@@ -1,257 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-/>
-  <title>Happy Birthday — Fullscreen Scroll</title>
-  <!-- Tailwind (CDN) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    /* Scroll snap like OnePlus sections */
-    html, body { height: 100%; }
-    body { scroll-behavior: smooth; }
-    .snapwrap { scroll-snap-type: y mandatory; }
-    .snap { scroll-snap-align: start; scroll-snap-stop: always; min-height: 100svh; }
+<meta charset="UTF-8">
+<title>HAPPY BIRTHDAY TWIN!!!!!</title>
 
-    /* Parallax helpers */
-    .parallax { will-change: transform; transform: translate3d(0,0,0); }
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(2333335deg,#8d0000, #380000);
+    font-family: Arial, sans-serif;
+}
 
-    /* Fade/slide reveal */
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.in { opacity: 1; transform: translateY(0); }
+.card{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    cursor:pointer;
+    transition:transform 0.3s, box-shadow 0.3s;
+}
 
-    /* Dots nav */
-    .dot { width: 10px; height: 10px; border-radius: 9999px; opacity:.5; transition: transform .2s, opacity .2s; }
-    .dot.active { opacity: 1; transform: scale(1.25); }
+.card:hover{
+    transform:scale(1.05);
+    box-shadow:0 15px 40px rgba(0,0,0,0.3);
+}
 
-    /* Nice selection + mask gradient */
-    ::selection { background: rgba(236,72,153,.35); }
-    .mask-t { mask-image: linear-gradient(to top, transparent 0, black 100px); }
-    .mask-b { mask-image: linear-gradient(to bottom, transparent 0, black 120px); }
-  </style>
+h1{
+    margin-bottom:10px;
+}
+
+p{
+    color:#555;
+}
+
+button{
+    margin-top:20px;
+    padding:12px 25px;
+    border:none;
+    border-radius:10px;
+    background:#ff4e50;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff2e33;
+}
+</style>
 </head>
-<body class="antialiased text-zinc-50 bg-black">
 
-  <!-- Right-side dots navigation -->
-  <nav id="dots"
-       class="fixed right-5 top-1/2 -translate-y-1/2 z-50 hidden sm:flex flex-col gap-3">
-    <!-- filled by JS -->
-  </nav>
+<body>
 
-  <!-- Progress bar top -->
-  <div class="fixed left-0 top-0 h-1 bg-pink-500/80 z-50" id="progress" style="width:0;"></div>
+<div class="card" onclick="goNext()">
+    <h1>HAPPY BIRTHDAY TWINNNN!!</h1>
+    <p>I GOT SOMETHING FOR UUUU!!🎁</p>
+    <button>noclick(jk)</button>
+    <img src="image_filename.jpg" alt="">
 
-  <!-- Wrapper with scroll-snap -->
-  <main id="wrap" class="snapwrap">
-    <!-- SECTION 1: HERO -->
-    <section id="s1" class="snap relative overflow-hidden">
-      <!-- bg image parallax -->
-      <img
-        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2000&auto=format&fit=crop"
-        alt=""
-        class="absolute inset-0 w-full h-full object-cover parallax"
-        data-speed="0.25"
-      />
-      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,.2),rgba(0,0,0,.85))]"></div>
+</div>
 
-      <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-        <div>
-          <h1 class="text-5xl sm:text-7xl font-extrabold tracking-tight reveal">
-            Happy Birthday <span id="name" class="text-pink-400">Your Sister</span> 🎉
-          </h1>
-          <p class="mt-4 text-lg sm:text-xl text-zinc-200 reveal"
-             style="transition-delay: .15s">
-            A fullscreen stroll through your favourite memories.
-          </p>
-          <a href="#s2"
-             class="inline-flex mt-8 px-5 py-3 rounded-full bg-pink-500 hover:bg-pink-400 text-white reveal"
-             style="transition-delay: .3s">
-            Start Scrolling
-          </a>
-        </div>
-      </div>
-    </section>
+<script>
+function goNext(){
+    window.location.href = "hai.html";
+}
+</script>
 
-    <!-- TEMPLATE FOR TIMELINE SECTIONS -->
-    <!-- SECTION 2 -->
-    <section id="s2" class="snap relative overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2000&auto=format&fit=crop"
-        class="absolute inset-0 w-full h-full object-cover parallax"
-        data-speed="0.18" alt=""
-      />
-      <div class="absolute inset-0 bg-black/50"></div>
-      <div class="relative z-10 h-full grid md:grid-cols-2">
-        <div class="flex items-center p-8 lg:p-16">
-          <div>
-            <div class="text-pink-300/90 text-sm tracking-widest uppercase reveal">2010</div>
-            <h2 class="text-4xl sm:text-5xl font-bold reveal" style="transition-delay:.06s">
-              The Cheeky Grin Era
-            </h2>
-            <p class="mt-4 text-zinc-200 reveal" style="transition-delay:.12s">
-              Back when your smile could convince anyone to share their snacks.
-            </p>
-          </div>
-        </div>
-        <div class="relative mask-t mask-b hidden md:block">
-          <img
-            src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1600&auto=format&fit=crop"
-            class="absolute bottom-0 right-0 w-[85%] rounded-3xl shadow-2xl parallax"
-            data-speed="-0.08" alt=""
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 3 -->
-    <section id="s3" class="snap relative overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=2000&auto=format&fit=crop"
-        class="absolute inset-0 w-full h-full object-cover parallax"
-        data-speed="0.2" alt=""
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/80"></div>
-      <div class="relative z-10 h-full grid md:grid-cols-2">
-        <div class="relative order-2 md:order-1 mask-t mask-b hidden md:block">
-          <img
-            src="https://images.unsplash.com/photo-1514250605469-45fda3b5d3c9?q=80&w=1600&auto=format&fit=crop"
-            class="absolute bottom-0 left-0 w-[85%] rounded-3xl shadow-2xl parallax"
-            data-speed="-0.06" alt=""
-          />
-        </div>
-        <div class="flex items-center p-8 lg:p-16 order-1 md:order-2">
-          <div class="md:ml-6">
-            <div class="text-pink-300/90 text-sm tracking-widest uppercase reveal">2018</div>
-            <h2 class="text-4xl sm:text-5xl font-bold reveal" style="transition-delay:.06s">
-              Explorer Mode Unlocked
-            </h2>
-            <p class="mt-4 text-zinc-200 reveal" style="transition-delay:.12s">
-              New cities, new foods, new playlists. The world kept up with you.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 4 -->
-    <section id="s4" class="snap relative overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1517817748496-62f19938c23d?q=80&w=2000&auto=format&fit=crop"
-        class="absolute inset-0 w-full h-full object-cover parallax"
-        data-speed="0.22" alt=""
-      />
-      <div class="absolute inset-0 bg-black/55"></div>
-      <div class="relative z-10 h-full grid md:grid-cols-2">
-        <div class="flex items-center p-8 lg:p-16">
-          <div>
-            <div class="text-pink-300/90 text-sm tracking-widest uppercase reveal">2024</div>
-            <h2 class="text-4xl sm:text-5xl font-bold reveal" style="transition-delay:.06s">
-              The Glow Up
-            </h2>
-            <p class="mt-4 text-zinc-200 reveal" style="transition-delay:.12s">
-              Growth, grit, and grace. You became unstoppable.
-            </p>
-          </div>
-        </div>
-        <div class="relative mask-t mask-b hidden md:block">
-          <img
-            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=1600&auto=format&fit=crop"
-            class="absolute bottom-0 right-0 w-[85%] rounded-3xl shadow-2xl parallax"
-            data-speed="-0.08" alt=""
-          />
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 5: GALLERY / CTA -->
-    <section id="s5" class="snap relative overflow-hidden">
-      <img
-        src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=2000&auto=format&fit=crop"
-        class="absolute inset-0 w-full h-full object-cover parallax"
-        data-speed="0.17" alt=""
-      />
-      <div class="absolute inset-0 bg-[linear-gradient(to_top,rgba(0,0,0,.7),rgba(0,0,0,.3))]"></div>
-
-      <div class="relative z-10 h-full flex items-center justify-center text-center px-6">
-        <div class="max-w-2xl">
-          <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight reveal">
-            Another Year of You 💜
-          </h2>
-          <p class="mt-4 text-zinc-200 reveal" style="transition-delay:.1s">
-            Want me to swap these placeholders with your real photos and a personal message?
-          </p>
-          <a href="#s1"
-             class="inline-flex mt-8 px-6 py-3 rounded-full bg-pink-500 hover:bg-pink-400 text-white reveal"
-             style="transition-delay:.2s">
-            Back to Top
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <script>
-    // -------- CONFIG --------
-    const HER_NAME = "Your Sister"; // change this
-    document.getElementById('name').textContent = HER_NAME;
-
-    // Build dots nav based on sections
-    const sections = Array.from(document.querySelectorAll('section.snap'));
-    const dots = document.getElementById('dots');
-    sections.forEach((sec, i) => {
-      const a = document.createElement('a');
-      a.href = `#${sec.id}`;
-      const d = document.createElement('div');
-      d.className = 'dot bg-white/70';
-      if (i === 0) d.classList.add('active');
-      a.appendChild(d);
-      dots.appendChild(a);
-    });
-
-    // Observe sections for active dot + reveal
-    const dotEls = Array.from(dots.querySelectorAll('.dot'));
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const idx = sections.indexOf(e.target);
-          dotEls.forEach(d => d.classList.remove('active'));
-          if (idx >= 0) dotEls[idx].classList.add('active');
-          // reveal children inside section
-          e.target.querySelectorAll('.reveal').forEach((el, k) => {
-            el.style.transitionDelay = (k * 80) + 'ms';
-            el.classList.add('in');
-          });
-        }
-      });
-    }, { threshold: 0.6 });
-    sections.forEach(s => io.observe(s));
-
-    // Parallax effect for elements with data-speed
-    const px = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      document.querySelectorAll('.parallax').forEach(el => {
-        const speed = parseFloat(el.getAttribute('data-speed') || '0');
-        // translate based on element's section offset for more subtle effect
-        const rect = el.closest('section').getBoundingClientRect();
-        const offset = rect.top + scrollY;
-        const delta = (scrollY - offset) * speed;
-        el.style.transform = `translate3d(0, ${delta}px, 0) scale(1.02)`;
-      });
-      // progress bar
-      const h = document.documentElement.scrollHeight - innerHeight;
-      const p = Math.max(0, Math.min(1, scrollY / h));
-      document.getElementById('progress').style.width = (p * 100) + '%';
-      requestAnimationFrame(px);
-    };
-    requestAnimationFrame(px);
-
-    // Show dots on larger screens only after DOM ready
-    if (window.matchMedia('(min-width: 640px)').matches) {
-      document.getElementById('dots').classList.remove('hidden');
-    }
-  </script>
 </body>
 </html>
