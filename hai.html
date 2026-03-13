@@ -11,24 +11,27 @@
     }
 
     :root {
-      --bg1: #0f0a0b;
-      --bg2: #1c1013;
-      --panel: #f7f0e8;
-      --ink: #111111;
-      --red: #c1121f;
-      --yellow: #ffd54a;
-      --green: #42d77d;
+      --bg1: #f4eee6;
+      --bg2: #ddd1c5;
+      --paper: rgba(255, 250, 244, 0.84);
+      --ink: #4a3f39;
+      --soft: #6f6159;
+      --accent: #8e6a74;
+      --accent2: #7f96a8;
+      --line: rgba(95, 78, 69, 0.15);
+      --shadow: rgba(80, 63, 53, 0.16);
+      --bonk: #f4bf4f;
     }
 
     body {
       margin: 0;
       height: 100vh;
       overflow: hidden;
+      font-family: "Trebuchet MS", Arial, sans-serif;
       background:
-        radial-gradient(circle at 15% 15%, rgba(193,18,31,0.18), transparent 24%),
-        radial-gradient(circle at 85% 20%, rgba(66,215,125,0.08), transparent 18%),
+        radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(142, 106, 116, 0.16), transparent 24%),
         linear-gradient(135deg, var(--bg1), var(--bg2));
-      font-family: Arial, sans-serif;
       position: relative;
     }
 
@@ -37,10 +40,14 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 12px 12px;
-      opacity: 0.16;
-      mix-blend-mode: screen;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 27px,
+          rgba(100, 85, 78, 0.04) 28px
+        );
+      opacity: 0.55;
     }
 
     .scene {
@@ -50,37 +57,46 @@
       overflow: hidden;
     }
 
+    /* STICKERS */
     .sticker {
       position: absolute;
       z-index: 1;
-      width: clamp(58px, 10vw, 100px);
+      width: clamp(62px, 10vw, 110px);
       pointer-events: none;
-      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.28));
-      opacity: 0.95;
+      user-select: none;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
+      opacity: 0.96;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      animation: stickerFloat 2.4s ease-in-out infinite;
     }
 
-    .sticker.top-right {
-      right: 14px;
-      top: 12px;
-      transform: rotate(10deg);
+    .sticker.changing {
+      opacity: 0.3;
     }
 
-    .sticker.bottom-left {
-      left: 12px;
-      bottom: 12px;
-      transform: rotate(-10deg);
+    .sticker.tl { top: 10px; left: 10px; --rot: -8deg; --dx: -2px; --dy: 3px; }
+    .sticker.tr { top: 10px; right: 10px; --rot: 8deg; --dx: 2px; --dy: 2px; }
+    .sticker.bl { bottom: 10px; left: 10px; --rot: 6deg; --dx: -3px; --dy: -2px; }
+    .sticker.br { bottom: 10px; right: 10px; --rot: -6deg; --dx: 3px; --dy: -2px; }
+
+    @keyframes stickerFloat {
+      0%   { transform: rotate(var(--rot)) translate(0px, 0px); }
+      25%  { transform: rotate(calc(var(--rot) - 1.2deg)) translate(var(--dx), var(--dy)); }
+      50%  { transform: rotate(calc(var(--rot) + 1deg)) translate(calc(var(--dx) * -0.5), calc(var(--dy) * -0.5)); }
+      75%  { transform: rotate(calc(var(--rot) - 0.8deg)) translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.4)); }
+      100% { transform: rotate(var(--rot)) translate(0px, 0px); }
     }
 
     .fatson-wrap,
     .joker-wrap {
       position: absolute;
-      background: var(--panel);
-      border: 4px solid var(--ink);
-      border-radius: 24px;
-      box-shadow:
-        0 0 0 6px var(--red),
-        0 14px 28px rgba(0,0,0,0.28);
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 26px;
       overflow: hidden;
+      box-shadow:
+        0 18px 34px var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,0.7);
     }
 
     .fatson-wrap::before,
@@ -89,9 +105,9 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
-      background-image: radial-gradient(rgba(0,0,0,0.07) 1px, transparent 1px);
-      background-size: 10px 10px;
-      opacity: 0.35;
+      background:
+        radial-gradient(circle at top right, rgba(127,143,161,0.08), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(142,106,116,0.06), transparent 26%);
     }
 
     .fatson-wrap {
@@ -125,7 +141,7 @@
     }
 
     .joker.hit {
-      filter: saturate(2.2) sepia(1) hue-rotate(-30deg) brightness(0.85);
+      filter: saturate(1.8) sepia(0.5) hue-rotate(-18deg) brightness(0.92);
     }
 
     .arm {
@@ -138,7 +154,7 @@
     .crowbar {
       width: 100%;
       display: block;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.38));
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22));
       user-select: none;
       -webkit-user-drag: none;
     }
@@ -147,13 +163,13 @@
       position: absolute;
       font-weight: 900;
       font-size: clamp(28px, 5vw, 52px);
-      color: var(--yellow);
+      color: var(--bonk);
       text-shadow:
-        -2px -2px 0 #000,
-         2px -2px 0 #000,
-        -2px  2px 0 #000,
-         2px  2px 0 #000,
-         0 6px 8px rgba(0,0,0,0.2);
+        -2px -2px 0 #ffffff,
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+         0 6px 8px rgba(0,0,0,0.12);
       opacity: 0;
       transform: scale(0.6) rotate(-8deg);
       transition: opacity 0.12s ease, transform 0.12s ease;
@@ -169,7 +185,7 @@
     .flash {
       position: absolute;
       inset: 0;
-      background: white;
+      background: rgba(255, 255, 255, 0.55);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.08s ease;
@@ -181,17 +197,18 @@
       left: 50%;
       bottom: 16px;
       transform: translateX(-50%);
-      color: #f0f0f0;
-      background: rgba(0,0,0,0.25);
-      border: 2px solid #ffffff22;
+      color: var(--ink);
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(95, 78, 69, 0.14);
       border-radius: 999px;
       padding: 10px 14px;
       font-size: 13px;
       font-weight: 800;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      text-transform: lowercase;
       z-index: 7;
       white-space: nowrap;
+      backdrop-filter: blur(4px);
     }
 
     .shake {
@@ -224,32 +241,16 @@
         font-size: 12px;
         padding: 8px 12px;
       }
-
-      .sticker.top-right {
-        right: 8px;
-        top: 8px;
-      }
-
-      .sticker.bottom-left {
-        left: 8px;
-        bottom: 8px;
-      }
     }
   </style>
 </head>
 <body>
   <div class="scene" id="scene">
-    <img
-      class="sticker top-right"
-      src="https://ih1.redbubble.net/image.4304496734.6416/raf%2C360x360%2C075%2Ct%2Cfafafa%3Aca443f4786.u1.jpg"
-      alt="Jason Todd chibi sticker"
-    />
-
-    <img
-      class="sticker bottom-left"
-      src="https://e7.pngegg.com/pngimages/211/33/png-clipart-chibiusa-jason-todd-art-drawing-chibi-superhero-chibi.png"
-      alt="Jason Todd chibi"
-    />
+    <!-- stickers -->
+    <img class="sticker tl" id="sticker-tl" alt="">
+    <img class="sticker tr" id="sticker-tr" alt="">
+    <img class="sticker bl" id="sticker-bl" alt="">
+    <img class="sticker br" id="sticker-br" alt="">
 
     <div class="fatson-wrap" id="fatsonWrap">
       <img src="fatson.png" class="fatson" id="fatson" alt="Fatson" />
@@ -282,9 +283,59 @@
     const flash = document.getElementById("flash");
     const sound = document.getElementById("bonkSound");
 
+    // stickers
+    const stickerEls = [
+      document.getElementById("sticker-tl"),
+      document.getElementById("sticker-tr"),
+      document.getElementById("sticker-bl"),
+      document.getElementById("sticker-br")
+    ];
+
+    const stickerFiles = [
+      "stickers1.png",
+      "stickers2.png",
+      "stickers3.png",
+      "stickers4.png",
+      "stickers5.png",
+      "stickers6.png",
+      "stickers7.png",
+      "stickers8.png",
+      "stickers9.png",
+      "stickers10.png"
+    ];
+
     let idleAngle = -18;
     let direction = 1;
     let busy = false;
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function setStickerSet() {
+      const picks = shuffle(stickerFiles).slice(0, 4);
+      stickerEls.forEach((el) => el.classList.add("changing"));
+
+      setTimeout(() => {
+        stickerEls.forEach((el, i) => {
+          el.src = picks[i];
+        });
+      }, 140);
+
+      setTimeout(() => {
+        stickerEls.forEach((el) => el.classList.remove("changing"));
+      }, 220);
+    }
+
+    function startStickerCycle() {
+      setStickerSet();
+      setInterval(setStickerSet, 3200);
+    }
 
     function safePlay(audio) {
       audio.currentTime = 0;
@@ -352,7 +403,7 @@
         joker.src = "joker2.png";
 
         bonkText.classList.add("show");
-        flash.style.opacity = "0.18";
+        flash.style.opacity = "1";
         scene.classList.add("shake");
 
         safePlay(sound);
@@ -379,6 +430,7 @@
     }
 
     window.addEventListener("load", () => {
+      startStickerCycle();
       placeArm();
       idleSwing();
     });
