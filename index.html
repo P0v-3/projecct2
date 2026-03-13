@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HAPPY BIRTHDAY TWIN!!!!!</title>
 
 <style>
@@ -47,8 +47,10 @@ transparent 0px,
 transparent 27px,
 rgba(100,85,78,0.04) 28px
 );
-opacity:0.55;
+opacity:.55;
 }
+
+/* STICKERS */
 
 .sticker{
 position:fixed;
@@ -57,7 +59,7 @@ width:clamp(68px,11vw,124px);
 pointer-events:none;
 user-select:none;
 filter:drop-shadow(0 8px 14px rgba(0,0,0,0.12));
-opacity:0.96;
+opacity:.96;
 transition:opacity .35s ease,transform .35s ease;
 animation:stickerFloat 2.4s ease-in-out infinite;
 }
@@ -76,9 +78,9 @@ animation:stickerFloat 2.4s ease-in-out infinite;
 
 @keyframes stickerFloat{
 0%{transform:rotate(var(--rot)) translate(0,0)}
-25%{transform:rotate(calc(var(--rot) - 1.2deg)) translate(var(--dx),var(--dy))}
-50%{transform:rotate(calc(var(--rot) + 1deg)) translate(calc(var(--dx)*-0.5),calc(var(--dy)*-0.5))}
-75%{transform:rotate(calc(var(--rot) - .8deg)) translate(calc(var(--dx)*.7),calc(var(--dy)*-.4))}
+25%{transform:rotate(calc(var(--rot)-1.2deg)) translate(var(--dx),var(--dy))}
+50%{transform:rotate(calc(var(--rot)+1deg)) translate(calc(var(--dx)*-0.5),calc(var(--dy)*-0.5))}
+75%{transform:rotate(calc(var(--rot)-.8deg)) translate(calc(var(--dx)*.7),calc(var(--dy)*-.4))}
 100%{transform:rotate(var(--rot)) translate(0,0)}
 }
 
@@ -93,8 +95,7 @@ border-radius:28px;
 padding:26px 18px 20px;
 box-shadow:
 0 18px 40px var(--shadow),
-inset 0 1px 0 rgba(255,255,255,0.72);
-overflow:hidden;
+inset 0 1px 0 rgba(255,255,255,.72);
 }
 
 h1{
@@ -106,8 +107,8 @@ font-weight:800;
 }
 
 .message-box{
-background:rgba(255,255,255,0.62);
-border:1.5px solid rgba(90,72,63,0.12);
+background:rgba(255,255,255,.62);
+border:1.5px solid rgba(90,72,63,.12);
 border-radius:20px;
 padding:16px;
 min-height:120px;
@@ -136,7 +137,7 @@ width:72px;
 height:62px;
 font-size:28px;
 cursor:pointer;
-box-shadow:0 10px 22px rgba(127,150,168,0.24);
+box-shadow:0 10px 22px rgba(127,150,168,.24);
 }
 
 .small-note{
@@ -162,6 +163,7 @@ border-radius:999px;
 from{transform:translateY(-10vh) rotate(0)}
 to{transform:translateY(115vh) rotate(720deg)}
 }
+
 </style>
 </head>
 
@@ -176,6 +178,7 @@ to{transform:translateY(115vh) rotate(720deg)}
 <audio id="confettiSound" src="confetti.mp3"></audio>
 
 <div class="card">
+
 <h1>HAPPY BIRTHDAY TWIN!! 🎂!</h1>
 
 <div class="message-box">
@@ -189,6 +192,7 @@ TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT B
 </div>
 
 <div class="small-note">tap the button</div>
+
 </div>
 
 <script>
@@ -197,20 +201,66 @@ const blower=document.getElementById("partyblower")
 const confettiSound=document.getElementById("confettiSound")
 const giftButton=document.getElementById("giftButton")
 
+const stickerEls=[
+document.getElementById("sticker-tl"),
+document.getElementById("sticker-tr"),
+document.getElementById("sticker-bl"),
+document.getElementById("sticker-br")
+]
+
+const stickerFiles=[
+"stickers1.png","stickers2.png","stickers3.png","stickers4.png",
+"stickers5.png","stickers6.png","stickers7.png","stickers8.png",
+"stickers9.png","stickers10.png"
+]
+
 let redirectStarted=false
-let redirectTimer=null
+
+function shuffle(arr){
+const a=[...arr]
+for(let i=a.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1))
+[a[i],a[j]]=[a[j],a[i]]
+}
+return a
+}
+
+function setStickerSet(){
+
+const picks=shuffle(stickerFiles).slice(0,4)
+
+stickerEls.forEach(el=>el.classList.add("changing"))
+
+setTimeout(()=>{
+stickerEls.forEach((el,i)=>{
+el.src=picks[i]
+})
+},140)
+
+setTimeout(()=>{
+stickerEls.forEach(el=>el.classList.remove("changing"))
+},220)
+
+}
+
+function startStickerCycle(){
+setStickerSet()
+setInterval(setStickerSet,3200)
+}
+
+window.addEventListener("load",()=>{
+startStickerCycle()
+})
 
 giftButton.addEventListener("click",(e)=>{
 
 e.stopPropagation()
 
-// second click → instant redirect
 if(redirectStarted){
 window.location.href="hai.html"
 return
 }
 
-// first click
 redirectStarted=true
 
 blower.currentTime=0
@@ -219,9 +269,9 @@ confettiSound.currentTime=0
 blower.play().catch(()=>{})
 confettiSound.play().catch(()=>{})
 
-redirectTimer=setTimeout(()=>{
+setTimeout(()=>{
 window.location.href="hai.html"
-},2000)
+},3500)
 
 })
 
