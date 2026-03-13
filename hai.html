@@ -1,172 +1,292 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fatson Bonks Joker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fatson Bonks Joker</title>
 
-<style>
-
-body{
-    margin:0;
-    background:#00a782;
-    height:100vh;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Arial;
-}
-
-.scene{
-    position:relative;
-    width:100vw;
-    height:100vh;
-}
-
-/* FATSON */
-.fatson{
-    position:absolute;
-    left:5%;
-    top:50%;
-    transform:translateY(-50%);
-    width:250px;
-    z-index:3;
-    border-radius:20px;
-}
-
-/* JOKER */
-.joker{
-    position:absolute;
-    right:5%;
-    top:50%;
-    transform:translateY(-50%);
-    width:250px;
-    border-radius:20px;
-    z-index:2;
-}
-
-/* ARM / SWING */
-.arm{
-    position:absolute;
-    left:230px;
-    top:42%;
-    width:200px;
-    height:200px;
-    transform-origin:20px 20px;
-    z-index:4;
-}
-
-/* CROWBAR */
-.crowbar{
-    width:200px;
-}
-
-/* HINT */
-.hint{
-    position:absolute;
-    bottom:20px;
-    left:50%;
-    transform:translateX(-50%);
-    background:rgba(0,0,0,0.2);
-    color:white;
-    padding:10px 18px;
-    border-radius:40px;
-}
-
-</style>
-</head>
-
-
-<body>
-
-<div class="scene">
-
-<img src="fatson.png" class="fatson">
-
-<img src="joker.png" class="joker" id="joker">
-
-<div class="arm" id="arm">
-<img src="crowbar.png" class="crowbar">
-</div>
-
-<div class="hint">click anywhere</div>
-
-<audio id="bonk">
-<source src="bonk.mp3" type="audio/mpeg">
-</audio>
-
-</div>
-
-
-<script>
-
-const arm = document.getElementById("arm");
-const joker = document.getElementById("joker");
-const bonk = document.getElementById("bonk");
-
-let angle = -20;
-let direction = 1;
-let speed = 0.5;
-
-let busy = false;
-
-/* IDLE SWING */
-function idleSwing(){
-
-    if(!busy){
-
-        angle += speed * direction;
-
-        if(angle > 10) direction = -1;
-        if(angle < -20) direction = 1;
-
-        arm.style.transform = "rotate(" + angle + "deg)";
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    requestAnimationFrame(idleSwing);
-}
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: #00a782;
+      font-family: Arial, sans-serif;
+    }
 
-idleSwing();
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
 
+    .fatson {
+      position: absolute;
+      left: 4vw;
+      top: 58%;
+      width: clamp(120px, 26vw, 240px);
+      transform: translateY(-50%);
+      z-index: 2;
+      border-radius: 18px;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
 
-/* BONK HIT */
+    .joker-wrap {
+      position: absolute;
+      right: 4vw;
+      top: 56%;
+      width: clamp(120px, 26vw, 240px);
+      transform: translateY(-50%);
+      z-index: 1;
+    }
 
-function bonkHit(){
+    .joker {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      transition: transform 0.09s ease, filter 0.15s ease;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
 
-if(busy) return;
+    .joker.hit {
+      filter: sepia(1) saturate(8) hue-rotate(-25deg) brightness(0.9);
+    }
 
-busy = true;
+    .arm {
+      position: absolute;
+      z-index: 3;
+      transform-origin: 16px 16px;
+      pointer-events: none;
+    }
 
-bonk.currentTime = 0;
-bonk.play();
+    .crowbar {
+      display: block;
+      width: 100%;
+      user-select: none;
+      -webkit-user-drag: none;
+      filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.28));
+    }
 
-arm.style.transition="transform 0.15s";
-arm.style.transform="rotate(60deg)";
+    .hint {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.18);
+      color: white;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 14px;
+      z-index: 10;
+      white-space: nowrap;
+    }
 
-joker.style.transition="transform 0.1s";
-joker.style.transform="translateY(-50%) translateX(20px)";
+    .bonk-text {
+      position: absolute;
+      font-weight: 900;
+      font-size: clamp(24px, 5vw, 48px);
+      color: #fff200;
+      text-shadow:
+        -2px -2px 0 #000,
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0 6px 10px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: scale(0.6);
+      transition: opacity 0.12s ease, transform 0.12s ease;
+      z-index: 6;
+      pointer-events: none;
+    }
 
-setTimeout(()=>{
+    .bonk-text.show {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-arm.style.transition="transform 0.3s";
-arm.style.transform="rotate(-10deg)";
+    .flash {
+      position: absolute;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.08s ease;
+      z-index: 5;
+    }
 
-joker.style.transform="translateY(-50%)";
+    @media (max-width: 700px) {
+      .fatson {
+        left: 2vw;
+        top: 62%;
+        width: 34vw;
+      }
 
-},200);
+      .joker-wrap {
+        right: 2vw;
+        top: 56%;
+        width: 34vw;
+      }
 
-setTimeout(()=>{
-busy=false;
-},500);
+      .hint {
+        font-size: 12px;
+        padding: 8px 12px;
+        bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene" id="scene">
+    <img src="fatson.png" alt="Fatson" class="fatson" id="fatson" />
 
-}
+    <div class="joker-wrap" id="jokerWrap">
+      <img src="joker.png" alt="Joker" class="joker" id="joker" />
+    </div>
 
+    <div class="arm" id="arm">
+      <img src="crowbar.png" alt="Crowbar" class="crowbar" id="crowbar" />
+    </div>
 
-document.body.addEventListener("click", bonkHit);
+    <div class="bonk-text" id="bonkText">BONK!</div>
+    <div class="flash" id="flash"></div>
+    <div class="hint">tap anywhere</div>
 
-</script>
+    <audio id="bonkSound" preload="auto">
+      <source src="bonk.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
 
+  <script>
+    const scene = document.getElementById("scene");
+    const fatson = document.getElementById("fatson");
+    const joker = document.getElementById("joker");
+    const jokerWrap = document.getElementById("jokerWrap");
+    const arm = document.getElementById("arm");
+    const crowbar = document.getElementById("crowbar");
+    const bonkSound = document.getElementById("bonkSound");
+    const bonkText = document.getElementById("bonkText");
+    const flash = document.getElementById("flash");
+
+    let idleAngle = -18;
+    let idleDirection = 1;
+    let busy = false;
+
+    function safePlay(audio) {
+      audio.currentTime = 0;
+      const p = audio.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {});
+      }
+    }
+
+    function placeArm() {
+      const fatRect = fatson.getBoundingClientRect();
+      const jokerRect = jokerWrap.getBoundingClientRect();
+      const sceneRect = scene.getBoundingClientRect();
+
+      const crowbarWidth = Math.min(window.innerWidth * 0.26, 220);
+      const crowbarHeight = crowbarWidth * 0.34;
+
+      // Anchor close to Fatson's hand
+      const anchorX = fatRect.left - sceneRect.left + fatRect.width * 0.78;
+      const anchorY = fatRect.top - sceneRect.top + fatRect.height * 0.42;
+
+      // Point the crowbar tip near Joker center-left so it always reaches him
+      const targetX = jokerRect.left - sceneRect.left + jokerRect.width * 0.18;
+      const targetY = jokerRect.top - sceneRect.top + jokerRect.height * 0.46;
+
+      const dx = targetX - anchorX;
+      const dy = targetY - anchorY;
+      const angleToJoker = Math.atan2(dy, dx) * 180 / Math.PI;
+
+      arm.style.left = anchorX + "px";
+      arm.style.top = anchorY + "px";
+      arm.style.width = crowbarWidth + "px";
+      arm.style.height = crowbarHeight + "px";
+
+      crowbar.style.width = crowbarWidth + "px";
+
+      arm.dataset.baseAngle = angleToJoker;
+      arm.style.transform = `rotate(${angleToJoker + idleAngle}deg)`;
+
+      // BONK text near Joker
+      bonkText.style.left = (jokerRect.left - sceneRect.left + jokerRect.width * 0.1) + "px";
+      bonkText.style.top = (jokerRect.top - sceneRect.top - 20) + "px";
+    }
+
+    function idleSwing() {
+      if (!busy) {
+        const baseAngle = parseFloat(arm.dataset.baseAngle || "0");
+        idleAngle += 0.35 * idleDirection;
+
+        if (idleAngle > -8) idleDirection = -1;
+        if (idleAngle < -18) idleDirection = 1;
+
+        arm.style.transform = `rotate(${baseAngle + idleAngle}deg)`;
+      }
+
+      requestAnimationFrame(idleSwing);
+    }
+
+    function doHit() {
+      if (busy) return;
+      busy = true;
+
+      const baseAngle = parseFloat(arm.dataset.baseAngle || "0");
+
+      arm.style.transition = "transform 0.10s ease-out";
+      joker.style.transition = "transform 0.09s ease, filter 0.12s ease";
+
+      // Small pullback
+      arm.style.transform = `rotate(${baseAngle - 26}deg)`;
+
+      setTimeout(() => {
+        // Exact hit toward Joker every time
+        arm.style.transform = `rotate(${baseAngle + 3}deg)`;
+
+        joker.style.transform = "translateX(12px) scale(0.97)";
+        joker.classList.add("hit");
+
+        bonkText.classList.add("show");
+        flash.style.opacity = "0.18";
+
+        safePlay(bonkSound);
+      }, 110);
+
+      setTimeout(() => {
+        flash.style.opacity = "0";
+        joker.style.transform = "translateX(0) scale(1)";
+        joker.classList.remove("hit");
+      }, 260);
+
+      setTimeout(() => {
+        arm.style.transition = "transform 0.22s ease-in-out";
+        arm.style.transform = `rotate(${baseAngle - 12}deg)`;
+        bonkText.classList.remove("show");
+      }, 290);
+
+      setTimeout(() => {
+        idleAngle = -12;
+        busy = false;
+      }, 520);
+    }
+
+    window.addEventListener("load", () => {
+      placeArm();
+      idleSwing();
+    });
+
+    window.addEventListener("resize", placeArm);
+
+    document.body.addEventListener("click", doHit);
+    document.body.addEventListener("touchstart", doHit, { passive: true });
+  </script>
 </body>
 </html>
