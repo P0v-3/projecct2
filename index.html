@@ -93,21 +93,24 @@ function goNext(){
 }
 </script>
         <script>
-function playSounds(){
-
-    const blower = document.getElementById("partyblower");
-    const confetti = document.getElementById("confetti");
-
-    blower.play();
-
+window.onload = function() {
+    // Wait 2 seconds after page load
     setTimeout(()=>{
-        confetti.play();
-    },500);
+        const blower = document.getElementById("partyblower");
+        const confetti = document.getElementById("confetti");
 
-    setTimeout(()=>{
-        window.location="hai.html";
-    },1500);
+        blower.play();
 
+        setTimeout(()=>{
+            confetti.play();
+        },500);
+
+        // Redirect after 1.5 seconds (same as before)
+        setTimeout(()=>{
+            window.location = "hai.html";
+        },1500);
+
+    },2000); // 2000ms = 2 seconds
 }
 </script>
 
