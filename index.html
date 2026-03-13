@@ -8,13 +8,12 @@
   <style>
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
       --bg1: #b83312;
       --bg2: #a4947e;
-      --paper: rgba(255, 250, 244, 0.9);
+      --paper: rgba(255, 250, 244, 0.88);
       --ink: #4a3f39;
       --soft: #6f6159;
       --accent: #8e6a74;
@@ -30,7 +29,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 18px;
       font-family: "Trebuchet MS", Arial, sans-serif;
       background:
         radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
@@ -57,7 +56,7 @@
     .sticker {
       position: fixed;
       z-index: 1;
-      width: clamp(72px, 16vw, 128px);
+      width: clamp(68px, 11vw, 124px);
       pointer-events: none;
       user-select: none;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
@@ -70,10 +69,10 @@
       opacity: 0.35;
     }
 
-    .sticker.tl { top: 8px; left: 8px; }
-    .sticker.tr { top: 8px; right: 8px; }
-    .sticker.bl { bottom: 8px; left: 8px; }
-    .sticker.br { bottom: 8px; right: 8px; }
+    .sticker.tl { top: 10px; left: 10px; }
+    .sticker.tr { top: 10px; right: 10px; }
+    .sticker.bl { bottom: 10px; left: 10px; }
+    .sticker.br { bottom: 10px; right: 10px; }
 
     .sticker.tl { --rot: -8deg; --dx: -2px; --dy: 3px; }
     .sticker.tr { --rot: 8deg; --dx: 2px; --dy: 2px; }
@@ -91,12 +90,12 @@
     .card {
       position: relative;
       z-index: 2;
-      width: min(94vw, 640px);
+      width: min(92vw, 560px);
       background: var(--paper);
       backdrop-filter: blur(8px);
       border: 1.5px solid var(--line);
       border-radius: 28px;
-      padding: 24px 16px 20px;
+      padding: 26px 18px 20px;
       box-shadow:
         0 18px 40px var(--shadow),
         inset 0 1px 0 rgba(255,255,255,0.72);
@@ -115,12 +114,12 @@
 
     h1 {
       position: relative;
-      margin: 0 0 16px;
+      margin: 6px 0 18px;
       text-align: center;
       color: var(--ink);
-      font-size: clamp(30px, 7vw, 46px);
+      font-size: clamp(28px, 6vw, 40px);
       line-height: 1.05;
-      font-weight: 900;
+      font-weight: 800;
       letter-spacing: 0.4px;
     }
 
@@ -139,8 +138,7 @@
       color: var(--soft);
       font-size: 15px;
       line-height: 1.7;
-      font-weight: 700;
-      text-align: center;
+      font-weight: 600;
     }
 
     .action-row {
@@ -149,29 +147,27 @@
       margin-top: 18px;
     }
 
-    .giant-btn {
-      width: min(88vw, 420px);
-      min-height: 96px;
+    .crowbar-btn {
       border: 0;
-      border-radius: 26px;
       background: linear-gradient(180deg, var(--accent2), var(--accent));
       color: white;
-      font-size: clamp(26px, 6vw, 38px);
-      font-weight: 900;
+      border-radius: 18px;
+      width: 72px;
+      height: 62px;
+      font-size: 28px;
       cursor: pointer;
-      box-shadow: 0 12px 28px rgba(127, 150, 168, 0.28);
-      transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.14s ease;
-      padding: 18px 20px;
+      box-shadow: 0 10px 22px rgba(127, 150, 168, 0.24);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
     }
 
-    .giant-btn:hover {
-      transform: translateY(-2px) scale(1.01);
-      box-shadow: 0 18px 34px rgba(127, 150, 168, 0.34);
+    .crowbar-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 14px 26px rgba(127, 150, 168, 0.28);
     }
 
-    .giant-btn:active {
+    .crowbar-btn:active {
       transform: scale(0.97);
-      opacity: 0.94;
+      opacity: 0.92;
     }
 
     .small-note {
@@ -179,7 +175,7 @@
       text-align: center;
       color: var(--soft);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 0.8px;
       text-transform: lowercase;
     }
@@ -189,36 +185,34 @@
       top: -12px;
       width: 10px;
       height: 16px;
-      opacity: 0.92;
-      z-index: 10;
+      opacity: 0.9;
+      z-index: 0;
       animation: fall linear forwards;
       border-radius: 999px;
-      pointer-events: none;
     }
 
     @keyframes fall {
-      from { transform: translateY(-10vh) rotate(0deg); }
-      to   { transform: translateY(115vh) rotate(720deg); }
+      from {
+        transform: translateY(-10vh) rotate(0deg);
+      }
+      to {
+        transform: translateY(115vh) rotate(720deg);
+      }
     }
 
     @media (max-width: 600px) {
       .card {
-        padding: 20px 12px 16px;
+        padding: 22px 14px 18px;
         border-radius: 24px;
       }
 
       .message-box {
-        min-height: 104px;
+        min-height: 108px;
         padding: 14px;
       }
 
       .message-box p {
         font-size: 14px;
-      }
-
-      .giant-btn {
-        min-height: 88px;
-        border-radius: 22px;
       }
     }
   </style>
@@ -232,26 +226,29 @@
   <audio id="partyblower" src="partyblower.mp3" preload="auto"></audio>
   <audio id="confettiSound" src="confetti.mp3" preload="auto"></audio>
 
-  <div class="card">
-    <h1>HAPPY BIRTHDAY TWIN!! 🎂</h1>
+  <div class="card" id="birthdayCard">
+    <h1>HAPPY BIRTHDAY TWIN!! 🎂!</h1>
 
     <div class="message-box">
       <p>
-        TWIN YOUR 14 FINALLY (took you long enough). WOW HAPPY BIRTHDAY. I HOPE YOU HAVE THE BEST DAY EVER.
+        TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
+        NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
+        GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
+        THE PINATA!!!! -@fizavocadoes 😼
       </p>
     </div>
 
     <div class="action-row">
-      <button type="button" class="giant-btn" id="startButton">OPEN NOW 🪓</button>
+      <button type="button" class="crowbar-btn" id="giftButton">🪓</button>
     </div>
 
-    <div class="small-note">tap once</div>
+    <div class="small-note">tap the button</div>
   </div>
 
   <script>
     const blower = document.getElementById("partyblower");
     const confettiSound = document.getElementById("confettiSound");
-    const startButton = document.getElementById("startButton");
+    const giftButton = document.getElementById("giftButton");
 
     const stickerEls = [
       document.getElementById("sticker-tl"),
@@ -273,7 +270,9 @@
       "stickers10.png"
     ];
 
-    let alreadyStarted = false;
+    let hasRedirected = false;
+    let stickerInterval;
+    let introPlayed = false;
 
     function shuffle(arr) {
       const a = [...arr];
@@ -286,7 +285,7 @@
 
     function setStickerSet() {
       const picks = shuffle(stickerFiles).slice(0, 4);
-      stickerEls.forEach(el => el.classList.add("changing"));
+      stickerEls.forEach((el) => el.classList.add("changing"));
 
       setTimeout(() => {
         stickerEls.forEach((el, i) => {
@@ -295,56 +294,65 @@
       }, 140);
 
       setTimeout(() => {
-        stickerEls.forEach(el => el.classList.remove("changing"));
+        stickerEls.forEach((el) => el.classList.remove("changing"));
       }, 220);
     }
 
     function startStickerCycle() {
       setStickerSet();
-      setInterval(setStickerSet, 3200);
+      stickerInterval = setInterval(setStickerSet, 3200);
     }
 
-    function spawnConfetti(count = 120) {
-      const colors = ["#8e6a74", "#7f96a8", "#ffffff", "#d8c3a5", "#6f6159", "#ffd166"];
+    function spawnConfetti(count = 90) {
+      const colors = ["#8e6a74", "#7f96a8", "#ffffff", "#d8c3a5", "#6f6159"];
       for (let i = 0; i < count; i++) {
         const piece = document.createElement("div");
         piece.className = "confetti";
         piece.style.left = Math.random() * 100 + "vw";
         piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2.6 + Math.random() * 2.2) + "s";
-        piece.style.animationDelay = (Math.random() * 0.45) + "s";
-        piece.style.width = (7 + Math.random() * 6) + "px";
-        piece.style.height = (12 + Math.random() * 9) + "px";
+        piece.style.animationDuration = (2.8 + Math.random() * 2.2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.7) + "s";
+        piece.style.width = (7 + Math.random() * 5) + "px";
+        piece.style.height = (12 + Math.random() * 8) + "px";
         document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 5500);
+        setTimeout(() => piece.remove(), 6000);
       }
     }
 
-    function playParty() {
-      blower.currentTime = 0;
-      confettiSound.currentTime = 0;
+    function playIntroEffects() {
+      if (introPlayed) return;
+      introPlayed = true;
+
+      spawnConfetti(110);
+
       blower.play().catch(() => {});
       setTimeout(() => {
         confettiSound.play().catch(() => {});
-      }, 120);
+      }, 180);
     }
 
-    function startSequence() {
-      if (alreadyStarted) return;
-      alreadyStarted = true;
+    function goNext() {
+      if (hasRedirected) return;
+      hasRedirected = true;
+      window.location.href = "hai.html";
+    }
 
-      startButton.disabled = true;
-      startButton.textContent = "GOING...";
-      spawnConfetti(140);
-      playParty();
+    window.addEventListener("load", () => {
+      startStickerCycle();
+
+      playIntroEffects();
 
       setTimeout(() => {
-        window.location.href = "hai.html";
-      }, 1400);
-    }
+        if (!introPlayed) playIntroEffects();
+      }, 150);
+    });
 
-    window.addEventListener("load", startStickerCycle);
-    startButton.addEventListener("click", startSequence);
+    document.addEventListener("click", playIntroEffects, { once: true });
+
+    giftButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      goNext();
+    });
   </script>
 </body>
 </html>
