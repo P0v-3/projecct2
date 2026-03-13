@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fatson Bonks Joker</title>
+  <title>HAPPY BIRTHDAY TWIN!!!!!</title>
 
   <style>
     * {
@@ -13,20 +13,23 @@
     :root {
       --bg1: #b83312;
       --bg2: #a4947e;
-      --paper: rgba(255, 250, 244, 0.84);
+      --paper: rgba(255, 250, 244, 0.88);
       --ink: #4a3f39;
       --soft: #6f6159;
       --accent: #8e6a74;
       --accent2: #7f96a8;
       --line: rgba(95, 78, 69, 0.15);
       --shadow: rgba(80, 63, 53, 0.16);
-      --bonk: #f4bf4f;
     }
 
     body {
       margin: 0;
-      height: 100vh;
+      min-height: 100vh;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 18px;
       font-family: "Trebuchet MS", Arial, sans-serif;
       background:
         radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
@@ -50,18 +53,10 @@
       opacity: 0.55;
     }
 
-    .scene {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-    }
-
-    /* STICKERS */
     .sticker {
-      position: absolute;
+      position: fixed;
       z-index: 1;
-      width: clamp(62px, 10vw, 110px);
+      width: clamp(68px, 11vw, 124px);
       pointer-events: none;
       user-select: none;
       filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
@@ -71,13 +66,18 @@
     }
 
     .sticker.changing {
-      opacity: 0.3;
+      opacity: 0.35;
     }
 
-    .sticker.tl { top: 10px; left: 10px; --rot: -8deg; --dx: -2px; --dy: 3px; }
-    .sticker.tr { top: 10px; right: 10px; --rot: 8deg; --dx: 2px; --dy: 2px; }
-    .sticker.bl { bottom: 10px; left: 10px; --rot: 6deg; --dx: -3px; --dy: -2px; }
-    .sticker.br { bottom: 10px; right: 10px; --rot: -6deg; --dx: 3px; --dy: -2px; }
+    .sticker.tl { top: 10px; left: 10px; }
+    .sticker.tr { top: 10px; right: 10px; }
+    .sticker.bl { bottom: 10px; left: 10px; }
+    .sticker.br { bottom: 10px; right: 10px; }
+
+    .sticker.tl { --rot: -8deg; --dx: -2px; --dy: 3px; }
+    .sticker.tr { --rot: 8deg; --dx: 2px; --dy: 2px; }
+    .sticker.bl { --rot: 6deg; --dx: -3px; --dy: -2px; }
+    .sticker.br { --rot: -6deg; --dx: 3px; --dy: -2px; }
 
     @keyframes stickerFloat {
       0%   { transform: rotate(var(--rot)) translate(0px, 0px); }
@@ -87,203 +87,169 @@
       100% { transform: rotate(var(--rot)) translate(0px, 0px); }
     }
 
-    .fatson-wrap,
-    .joker-wrap {
-      position: absolute;
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(92vw, 560px);
       background: var(--paper);
+      backdrop-filter: blur(8px);
       border: 1.5px solid var(--line);
-      border-radius: 26px;
-      overflow: hidden;
+      border-radius: 28px;
+      padding: 26px 18px 20px;
       box-shadow:
-        0 18px 34px var(--shadow),
-        inset 0 1px 0 rgba(255,255,255,0.7);
+        0 18px 40px var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,0.72);
+      overflow: hidden;
     }
 
-    .fatson-wrap::before,
-    .joker-wrap::before {
+    .card::before {
       content: "";
       position: absolute;
       inset: 0;
-      pointer-events: none;
       background:
-        radial-gradient(circle at top right, rgba(127,143,161,0.08), transparent 28%),
-        radial-gradient(circle at bottom left, rgba(142,106,116,0.06), transparent 26%);
+        radial-gradient(circle at top right, rgba(127,143,161,0.10), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(138,90,98,0.08), transparent 26%);
+      pointer-events: none;
     }
 
-    .fatson-wrap {
-      left: 4vw;
-      top: 56%;
-      width: clamp(120px, 26vw, 240px);
-      transform: translateY(-50%);
-      z-index: 2;
-    }
-
-    .joker-wrap {
-      right: 4vw;
-      top: 52%;
-      width: clamp(120px, 26vw, 240px);
-      transform: translateY(-50%);
-      z-index: 2;
-    }
-
-    .fatson,
-    .joker {
-      display: block;
-      width: 100%;
+    h1 {
       position: relative;
-      z-index: 1;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .joker {
-      transition: transform 0.1s ease, filter 0.1s ease;
-    }
-
-    .joker.hit {
-      filter: saturate(1.8) sepia(0.5) hue-rotate(-18deg) brightness(0.92);
-    }
-
-    .arm {
-      position: absolute;
-      z-index: 4;
-      transform-origin: 16px 16px;
-      pointer-events: none;
-    }
-
-    .crowbar {
-      width: 100%;
-      display: block;
-      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22));
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .bonk {
-      position: absolute;
-      font-weight: 900;
-      font-size: clamp(28px, 5vw, 52px);
-      color: var(--bonk);
-      text-shadow:
-        -2px -2px 0 #ffffff,
-         2px -2px 0 #ffffff,
-        -2px  2px 0 #ffffff,
-         2px  2px 0 #ffffff,
-         0 6px 8px rgba(0,0,0,0.12);
-      opacity: 0;
-      transform: scale(0.6) rotate(-8deg);
-      transition: opacity 0.12s ease, transform 0.12s ease;
-      z-index: 6;
-      pointer-events: none;
-    }
-
-    .bonk.show {
-      opacity: 1;
-      transform: scale(1) rotate(-8deg);
-    }
-
-    .flash {
-      position: absolute;
-      inset: 0;
-      background: rgba(255, 255, 255, 0.55);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.08s ease;
-      z-index: 5;
-    }
-
-    .hint {
-      position: absolute;
-      left: 50%;
-      bottom: 16px;
-      transform: translateX(-50%);
+      margin: 6px 0 18px;
+      text-align: center;
       color: var(--ink);
-      background: rgba(255,255,255,0.5);
-      border: 1px solid rgba(95, 78, 69, 0.14);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 13px;
+      font-size: clamp(28px, 6vw, 40px);
+      line-height: 1.05;
       font-weight: 800;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.4px;
+    }
+
+    .message-box {
+      position: relative;
+      background: rgba(255,255,255,0.62);
+      border: 1.5px solid rgba(90,72,63,0.12);
+      border-radius: 20px;
+      padding: 16px;
+      min-height: 120px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .message-box p {
+      margin: 0;
+      color: var(--soft);
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 18px;
+    }
+
+    .crowbar-btn {
+      border: 0;
+      background: linear-gradient(180deg, var(--accent2), var(--accent));
+      color: white;
+      border-radius: 18px;
+      width: 72px;
+      height: 62px;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(127, 150, 168, 0.24);
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+    }
+
+    .crowbar-btn:hover {
+      transform: translateY(-1px) scale(1.02);
+      box-shadow: 0 14px 26px rgba(127, 150, 168, 0.28);
+    }
+
+    .crowbar-btn:active {
+      transform: scale(0.97);
+      opacity: 0.92;
+    }
+
+    .small-note {
+      margin-top: 12px;
+      text-align: center;
+      color: var(--soft);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
       text-transform: lowercase;
-      z-index: 7;
-      white-space: nowrap;
-      backdrop-filter: blur(4px);
     }
 
-    .shake {
-      animation: shake 0.18s linear;
+    .confetti {
+      position: fixed;
+      top: -12px;
+      width: 10px;
+      height: 16px;
+      opacity: 0.9;
+      z-index: 0;
+      animation: fall linear forwards;
+      border-radius: 999px;
     }
 
-    @keyframes shake {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(-5px, 2px); }
-      50% { transform: translate(4px, -2px); }
-      75% { transform: translate(-3px, 1px); }
-      100% { transform: translate(0, 0); }
+    @keyframes fall {
+      from {
+        transform: translateY(-10vh) rotate(0deg);
+      }
+      to {
+        transform: translateY(115vh) rotate(720deg);
+      }
     }
 
-    @media (max-width: 700px) {
-      .fatson-wrap {
-        left: 2vw;
-        top: 60%;
-        width: 34vw;
+    @media (max-width: 600px) {
+      .card {
+        padding: 22px 14px 18px;
+        border-radius: 24px;
       }
 
-      .joker-wrap {
-        right: 2vw;
-        top: 54%;
-        width: 34vw;
+      .message-box {
+        min-height: 108px;
+        padding: 14px;
       }
 
-      .hint {
-        bottom: 12px;
-        font-size: 12px;
-        padding: 8px 12px;
+      .message-box p {
+        font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="scene" id="scene">
-    <!-- stickers -->
-    <img class="sticker tl" id="sticker-tl" alt="">
-    <img class="sticker tr" id="sticker-tr" alt="">
-    <img class="sticker bl" id="sticker-bl" alt="">
-    <img class="sticker br" id="sticker-br" alt="">
+  <img class="sticker tl" id="sticker-tl" alt="">
+  <img class="sticker tr" id="sticker-tr" alt="">
+  <img class="sticker bl" id="sticker-bl" alt="">
+  <img class="sticker br" id="sticker-br" alt="">
 
-    <div class="fatson-wrap" id="fatsonWrap">
-      <img src="fatson.png" class="fatson" id="fatson" alt="Fatson" />
+  <audio id="partyblower" src="partyblower.mp3" preload="auto"></audio>
+  <audio id="confettiSound" src="confetti.mp3" preload="auto"></audio>
+
+  <div class="card" id="birthdayCard">
+    <h1>HAPPY BIRTHDAY TWIN!! 🎂!</h1>
+
+    <div class="message-box">
+      <p>
+        TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
+        NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
+        GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
+        THE PINATA!!!! -@fizavocadoes 😼
+      </p>
     </div>
 
-    <div class="joker-wrap" id="jokerWrap">
-      <img src="joker.png" class="joker" id="joker" alt="Joker" />
+    <div class="action-row">
+      <button type="button" class="crowbar-btn" id="giftButton">🪓</button>
     </div>
 
-    <div class="arm" id="arm">
-      <img src="crowbar.png" class="crowbar" id="crowbar" alt="Crowbar" />
-    </div>
-
-    <div class="bonk" id="bonkText">BONK!</div>
-    <div class="flash" id="flash"></div>
-    <div class="hint">tap anywhere</div>
-
-    <audio id="bonkSound" preload="auto">
-      <source src="bonk.mp3" type="audio/mpeg" />
-    </audio>
+    <div class="small-note">tap the button</div>
   </div>
 
   <script>
-    const scene = document.getElementById("scene");
-    const fatson = document.getElementById("fatson");
-    const joker = document.getElementById("joker");
-    const jokerWrap = document.getElementById("jokerWrap");
-    const arm = document.getElementById("arm");
-    const bonkText = document.getElementById("bonkText");
-    const flash = document.getElementById("flash");
-    const sound = document.getElementById("bonkSound");
+    const blower = document.getElementById("partyblower");
+    const confettiSound = document.getElementById("confettiSound");
+    const giftButton = document.getElementById("giftButton");
 
-    // stickers
     const stickerEls = [
       document.getElementById("sticker-tl"),
       document.getElementById("sticker-tr"),
@@ -304,9 +270,9 @@
       "stickers10.png"
     ];
 
-    let idleAngle = -18;
-    let direction = 1;
-    let busy = false;
+    let hasRedirected = false;
+    let stickerInterval;
+    let introPlayed = false;
 
     function shuffle(arr) {
       const a = [...arr];
@@ -334,111 +300,59 @@
 
     function startStickerCycle() {
       setStickerSet();
-      setInterval(setStickerSet, 3200);
+      stickerInterval = setInterval(setStickerSet, 3200);
     }
 
-    function safePlay(audio) {
-      audio.currentTime = 0;
-      const p = audio.play();
-      if (p && typeof p.catch === "function") {
-        p.catch(() => {});
+    function spawnConfetti(count = 90) {
+      const colors = ["#8e6a74", "#7f96a8", "#ffffff", "#d8c3a5", "#6f6159"];
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2.8 + Math.random() * 2.2) + "s";
+        piece.style.animationDelay = (Math.random() * 0.7) + "s";
+        piece.style.width = (7 + Math.random() * 5) + "px";
+        piece.style.height = (12 + Math.random() * 8) + "px";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 6000);
       }
     }
 
-    function placeArm() {
-      const fat = fatson.getBoundingClientRect();
-      const jokerBox = jokerWrap.getBoundingClientRect();
-      const sceneBox = scene.getBoundingClientRect();
+    function playIntroEffects() {
+      if (introPlayed) return;
+      introPlayed = true;
 
-      const crowbarWidth = Math.min(window.innerWidth * 0.27, 220);
+      spawnConfetti(110);
 
-      const anchorX = fat.left - sceneBox.left + fat.width * 0.82;
-      const anchorY = fat.top - sceneBox.top + fat.height * 0.46;
-
-      const targetX = jokerBox.left - sceneBox.left + jokerBox.width * 0.18;
-      const targetY = jokerBox.top - sceneBox.top + jokerBox.height * 0.5;
-
-      const dx = targetX - anchorX;
-      const dy = targetY - anchorY;
-      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
-
-      arm.style.left = anchorX + "px";
-      arm.style.top = anchorY + "px";
-      arm.style.width = crowbarWidth + "px";
-      arm.dataset.baseAngle = angle;
-      arm.style.transform = `rotate(${angle + idleAngle}deg)`;
-
-      bonkText.style.left = (jokerBox.left - sceneBox.left + jokerBox.width * 0.08) + "px";
-      bonkText.style.top = (jokerBox.top - sceneBox.top - 24) + "px";
+      blower.play().catch(() => {});
+      setTimeout(() => {
+        confettiSound.play().catch(() => {});
+      }, 180);
     }
 
-    function idleSwing() {
-      if (!busy) {
-        const base = parseFloat(arm.dataset.baseAngle || "0");
-        idleAngle += 0.35 * direction;
-
-        if (idleAngle > -8) direction = -1;
-        if (idleAngle < -18) direction = 1;
-
-        arm.style.transform = `rotate(${base + idleAngle}deg)`;
-      }
-
-      requestAnimationFrame(idleSwing);
-    }
-
-    function hit() {
-      if (busy) return;
-      busy = true;
-
-      const base = parseFloat(arm.dataset.baseAngle || "0");
-
-      arm.style.transition = "transform 0.1s ease-out";
-      arm.style.transform = `rotate(${base - 26}deg)`;
-
-      setTimeout(() => {
-        arm.style.transform = `rotate(${base + 4}deg)`;
-
-        joker.classList.add("hit");
-        joker.style.transform = "translateX(12px) scale(0.97)";
-        joker.src = "joker2.png";
-
-        bonkText.classList.add("show");
-        flash.style.opacity = "1";
-        scene.classList.add("shake");
-
-        safePlay(sound);
-      }, 110);
-
-      setTimeout(() => {
-        flash.style.opacity = "0";
-        joker.style.transform = "translateX(0) scale(1)";
-        joker.classList.remove("hit");
-        joker.src = "joker.png";
-        scene.classList.remove("shake");
-      }, 300);
-
-      setTimeout(() => {
-        arm.style.transition = "transform 0.24s ease-in-out";
-        arm.style.transform = `rotate(${base - 12}deg)`;
-        bonkText.classList.remove("show");
-      }, 320);
-
-      setTimeout(() => {
-        idleAngle = -12;
-        busy = false;
-      }, 520);
+    function goNext() {
+      if (hasRedirected) return;
+      hasRedirected = true;
+      window.location.href = "hai.html";
     }
 
     window.addEventListener("load", () => {
       startStickerCycle();
-      placeArm();
-      idleSwing();
+
+      playIntroEffects();
+
+      setTimeout(() => {
+        if (!introPlayed) playIntroEffects();
+      }, 150);
     });
 
-    window.addEventListener("resize", placeArm);
+    document.addEventListener("click", playIntroEffects, { once: true });
 
-    document.body.addEventListener("click", hit);
-    document.body.addEventListener("touchstart", hit, { passive: true });
+    giftButton.addEventListener("click", (e) => {
+      e.stopPropagation();
+      goNext();
+    });
   </script>
 </body>
 </html>
