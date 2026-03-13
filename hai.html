@@ -3,428 +3,442 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boss Fight 🎉</title>
+  <title>Fatson Bonks Joker</title>
 
   <style>
     * {
       box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
     }
 
     :root {
-      --bg1: #1f1a24;
-      --bg2: #5d2f67;
-      --panel: rgba(255, 247, 252, 0.9);
-      --ink: #342536;
-      --soft: #715c73;
-      --hp-bg: #e7dce7;
-      --hp-fill: linear-gradient(90deg, #58c56e, #f2c94c, #ef5350);
-      --shadow: rgba(0, 0, 0, 0.24);
-      --accent: #7c4dff;
-      --accent2: #ff5fb2;
+      --bg1: #f4eee6;
+      --bg2: #ddd1c5;
+      --paper: rgba(255, 250, 244, 0.84);
+      --ink: #4a3f39;
+      --soft: #6f6159;
+      --accent: #8e6a74;
+      --accent2: #7f96a8;
+      --line: rgba(95, 78, 69, 0.15);
+      --shadow: rgba(80, 63, 53, 0.16);
+      --bonk: #f4bf4f;
     }
 
     body {
       margin: 0;
-      min-height: 100vh;
-      overflow-x: hidden;
+      height: 100vh;
+      overflow: hidden;
       font-family: "Trebuchet MS", Arial, sans-serif;
       background:
-        radial-gradient(circle at top, rgba(255,255,255,0.05), transparent 25%),
-        linear-gradient(160deg, var(--bg1), var(--bg2));
-      color: white;
-      display: flex;
-      justify-content: center;
-      padding: 16px;
+        radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
+        radial-gradient(circle at bottom right, rgba(142, 106, 116, 0.16), transparent 24%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
       position: relative;
     }
 
-    .wrap {
-      width: min(100%, 760px);
-      padding-top: 14px;
-      padding-bottom: 40px;
-    }
-
-    .top-popup {
+    body::before {
+      content: "";
       position: fixed;
-      top: -220px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(92vw, 500px);
-      background: rgba(255,255,255,0.96);
-      color: #2f2430;
-      border-radius: 0 0 24px 24px;
-      box-shadow: 0 14px 34px rgba(0,0,0,0.28);
-      padding: 18px 18px 20px;
-      z-index: 50;
-      text-align: center;
-      transition: top 0.55s cubic-bezier(.2,.8,.2,1);
-      border: 1px solid rgba(0,0,0,0.08);
+      inset: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0px,
+          transparent 27px,
+          rgba(100, 85, 78, 0.04) 28px
+        );
+      opacity: 0.55;
     }
 
-    .top-popup.show {
-      top: 0;
-    }
-
-    .top-popup h2 {
-      margin: 0 0 8px;
-      font-size: clamp(24px, 5vw, 34px);
-      color: #5d2f67;
-    }
-
-    .top-popup p {
-      margin: 6px 0;
-      font-size: 16px;
-      font-weight: 800;
-    }
-
-    .boss-panel {
-      background: var(--panel);
-      border-radius: 26px;
-      padding: 18px;
-      box-shadow: 0 16px 36px var(--shadow);
-      color: var(--ink);
-    }
-
-    .boss-title {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 900;
-      letter-spacing: 0.3px;
-    }
-
-    .boss-sub {
-      text-align: center;
-      margin: 0 0 18px;
-      color: var(--soft);
-      font-weight: 800;
-      font-size: 14px;
-    }
-
-    .boss-head {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .boss-avatar {
-      width: clamp(82px, 20vw, 120px);
-      height: clamp(82px, 20vw, 120px);
-      border-radius: 999px;
-      object-fit: cover;
-      border: 4px solid rgba(124, 77, 255, 0.2);
-      background: #eee;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.14);
-    }
-
-    .boss-info {
-      flex: 1 1 280px;
-      min-width: 0;
-    }
-
-    .boss-name-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
-    }
-
-    .boss-name {
-      font-size: clamp(22px, 5vw, 30px);
-      font-weight: 900;
-      color: #4b2f4f;
-    }
-
-    .hp-text {
-      font-weight: 900;
-      color: #6b556c;
-      font-size: 15px;
-      white-space: nowrap;
-    }
-
-    .hp-shell {
-      width: 100%;
-      height: 26px;
-      border-radius: 999px;
-      background: var(--hp-bg);
+    .scene {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
       overflow: hidden;
-      border: 2px solid rgba(0,0,0,0.07);
-      box-shadow: inset 0 2px 6px rgba(0,0,0,0.08);
     }
 
-    .hp-fill {
-      height: 100%;
+    /* STICKERS */
+    .sticker {
+      position: absolute;
+      z-index: 1;
+      width: clamp(62px, 10vw, 110px);
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
+      opacity: 0.96;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      animation: stickerFloat 2.4s ease-in-out infinite;
+    }
+
+    .sticker.changing {
+      opacity: 0.3;
+    }
+
+    .sticker.tl { top: 10px; left: 10px; --rot: -8deg; --dx: -2px; --dy: 3px; }
+    .sticker.tr { top: 10px; right: 10px; --rot: 8deg; --dx: 2px; --dy: 2px; }
+    .sticker.bl { bottom: 10px; left: 10px; --rot: 6deg; --dx: -3px; --dy: -2px; }
+    .sticker.br { bottom: 10px; right: 10px; --rot: -6deg; --dx: 3px; --dy: -2px; }
+
+    @keyframes stickerFloat {
+      0%   { transform: rotate(var(--rot)) translate(0px, 0px); }
+      25%  { transform: rotate(calc(var(--rot) - 1.2deg)) translate(var(--dx), var(--dy)); }
+      50%  { transform: rotate(calc(var(--rot) + 1deg)) translate(calc(var(--dx) * -0.5), calc(var(--dy) * -0.5)); }
+      75%  { transform: rotate(calc(var(--rot) - 0.8deg)) translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.4)); }
+      100% { transform: rotate(var(--rot)) translate(0px, 0px); }
+    }
+
+    .fatson-wrap,
+    .joker-wrap {
+      position: absolute;
+      background: var(--paper);
+      border: 1.5px solid var(--line);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow:
+        0 18px 34px var(--shadow),
+        inset 0 1px 0 rgba(255,255,255,0.7);
+    }
+
+    .fatson-wrap::before,
+    .joker-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top right, rgba(127,143,161,0.08), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(142,106,116,0.06), transparent 26%);
+    }
+
+    .fatson-wrap {
+      left: 4vw;
+      top: 56%;
+      width: clamp(120px, 26vw, 240px);
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .joker-wrap {
+      right: 4vw;
+      top: 52%;
+      width: clamp(120px, 26vw, 240px);
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .fatson,
+    .joker {
+      display: block;
       width: 100%;
-      background: var(--hp-fill);
-      border-radius: inherit;
-      transition: width 0.25s ease;
+      position: relative;
+      z-index: 1;
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
-    .arena {
-      margin-top: 18px;
-      background: rgba(124, 77, 255, 0.08);
-      border: 1px solid rgba(124, 77, 255, 0.12);
-      border-radius: 22px;
-      padding: 18px 14px 22px;
-      text-align: center;
+    .joker {
+      transition: transform 0.1s ease, filter 0.1s ease;
     }
 
-    .big-joker {
-      width: min(78vw, 280px);
-      max-width: 100%;
-      border-radius: 22px;
-      object-fit: cover;
-      box-shadow: 0 12px 26px rgba(0,0,0,0.18);
-      background: #eee;
-      transition: transform 0.12s ease;
+    .joker.hit {
+      filter: saturate(1.8) sepia(0.5) hue-rotate(-18deg) brightness(0.92);
     }
 
-    .big-joker.hit {
-      animation: hitShake 0.24s ease;
-    }
-
-    @keyframes hitShake {
-      0% { transform: translateX(0) scale(1); }
-      20% { transform: translateX(-8px) scale(0.98); }
-      40% { transform: translateX(8px) scale(1.02); }
-      60% { transform: translateX(-6px) scale(0.99); }
-      80% { transform: translateX(6px) scale(1.01); }
-      100% { transform: translateX(0) scale(1); }
-    }
-
-    .attack-row {
-      margin-top: 18px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .attack-btn {
-      width: min(88vw, 420px);
-      min-height: 84px;
-      border: 0;
-      border-radius: 24px;
-      background: linear-gradient(180deg, var(--accent2), var(--accent));
-      color: white;
-      font-size: clamp(24px, 6vw, 34px);
-      font-weight: 900;
-      cursor: pointer;
-      padding: 16px 18px;
-      box-shadow: 0 14px 30px rgba(124, 77, 255, 0.28);
-      transition: transform 0.12s ease, opacity 0.12s ease;
-    }
-
-    .attack-btn:active {
-      transform: scale(0.97);
-      opacity: 0.94;
-    }
-
-    .attack-btn:disabled {
-      opacity: 0.65;
-      cursor: default;
-    }
-
-    .note {
-      text-align: center;
-      margin-top: 10px;
-      color: #eadff0;
-      font-weight: 800;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-    }
-
-    .reward-box {
-      margin-top: 18px;
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .reward {
-      background: rgba(255,255,255,0.1);
-      border-radius: 18px;
-      padding: 14px;
-      text-align: center;
-      color: white;
-      font-weight: 900;
-      backdrop-filter: blur(4px);
-    }
-
-    .confetti {
-      position: fixed;
-      top: -12px;
-      width: 10px;
-      height: 16px;
-      opacity: 0.92;
-      z-index: 60;
-      animation: fall linear forwards;
-      border-radius: 999px;
+    .arm {
+      position: absolute;
+      z-index: 4;
+      transform-origin: 16px 16px;
       pointer-events: none;
     }
 
-    @keyframes fall {
-      from { transform: translateY(-10vh) rotate(0deg); }
-      to   { transform: translateY(115vh) rotate(720deg); }
+    .crowbar {
+      width: 100%;
+      display: block;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.22));
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
-    @media (max-width: 600px) {
-      .boss-panel {
-        padding: 14px;
-        border-radius: 22px;
+    .bonk {
+      position: absolute;
+      font-weight: 900;
+      font-size: clamp(28px, 5vw, 52px);
+      color: var(--bonk);
+      text-shadow:
+        -2px -2px 0 #ffffff,
+         2px -2px 0 #ffffff,
+        -2px  2px 0 #ffffff,
+         2px  2px 0 #ffffff,
+         0 6px 8px rgba(0,0,0,0.12);
+      opacity: 0;
+      transform: scale(0.6) rotate(-8deg);
+      transition: opacity 0.12s ease, transform 0.12s ease;
+      z-index: 6;
+      pointer-events: none;
+    }
+
+    .bonk.show {
+      opacity: 1;
+      transform: scale(1) rotate(-8deg);
+    }
+
+    .flash {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.55);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.08s ease;
+      z-index: 5;
+    }
+
+    .hint {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      color: var(--ink);
+      background: rgba(255,255,255,0.5);
+      border: 1px solid rgba(95, 78, 69, 0.14);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      text-transform: lowercase;
+      z-index: 7;
+      white-space: nowrap;
+      backdrop-filter: blur(4px);
+    }
+
+    .shake {
+      animation: shake 0.18s linear;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-5px, 2px); }
+      50% { transform: translate(4px, -2px); }
+      75% { transform: translate(-3px, 1px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    @media (max-width: 700px) {
+      .fatson-wrap {
+        left: 2vw;
+        top: 60%;
+        width: 34vw;
       }
 
-      .boss-head {
-        gap: 10px;
+      .joker-wrap {
+        right: 2vw;
+        top: 54%;
+        width: 34vw;
       }
 
-      .boss-name-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .hp-shell {
-        height: 24px;
-      }
-
-      .attack-btn {
-        min-height: 78px;
-        border-radius: 20px;
-      }
-
-      .reward-box {
-        grid-template-columns: 1fr;
+      .hint {
+        bottom: 12px;
+        font-size: 12px;
+        padding: 8px 12px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="top-popup" id="winPopup">
-    <h2>YAYYY 🎉</h2>
-    <p>yay u defeated the evil man</p>
-    <p>+10 candy 🍬</p>
-    <p>+1 cake 🎂</p>
-  </div>
+  <div class="scene" id="scene">
+    <!-- stickers -->
+    <img class="sticker tl" id="sticker-tl" alt="">
+    <img class="sticker tr" id="sticker-tr" alt="">
+    <img class="sticker bl" id="sticker-bl" alt="">
+    <img class="sticker br" id="sticker-br" alt="">
 
-  <div class="wrap">
-    <div class="boss-panel">
-      <h1 class="boss-title">BOSS FIGHT</h1>
-      <p class="boss-sub">defeat joker to unlock the surprise</p>
-
-      <div class="boss-head">
-        <img
-          class="boss-avatar"
-          id="bossAvatar"
-          src="joker.png"
-          alt="Joker"
-          onerror="this.src='https://placehold.co/300x300/png?text=Joker';"
-        />
-
-        <div class="boss-info">
-          <div class="boss-name-row">
-            <div class="boss-name">Joker</div>
-            <div class="hp-text" id="hpText">10 / 10 HP</div>
-          </div>
-
-          <div class="hp-shell" aria-label="Boss health bar">
-            <div class="hp-fill" id="hpFill"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="arena">
-        <img
-          class="big-joker"
-          id="bigJoker"
-          src="joker.png"
-          alt="Joker Boss"
-          onerror="this.src='https://placehold.co/600x600/png?text=Joker';"
-        />
-
-        <div class="attack-row">
-          <button type="button" class="attack-btn" id="attackBtn">HIT THE JOKER 🪓</button>
-        </div>
-      </div>
+    <div class="fatson-wrap" id="fatsonWrap">
+      <img src="fatson.png" class="fatson" id="fatson" alt="Fatson" />
     </div>
 
-    <div class="note">every hit removes 1 hp</div>
-
-    <div class="reward-box">
-      <div class="reward">Boss HP: <span id="hpMini">10</span></div>
-      <div class="reward">Reward waits at 0 HP ✨</div>
+    <div class="joker-wrap" id="jokerWrap">
+      <img src="joker.png" class="joker" id="joker" alt="Joker" />
     </div>
+
+    <div class="arm" id="arm">
+      <img src="crowbar.png" class="crowbar" id="crowbar" alt="Crowbar" />
+    </div>
+
+    <div class="bonk" id="bonkText">BONK!</div>
+    <div class="flash" id="flash"></div>
+    <div class="hint">tap anywhere</div>
+
+    <audio id="bonkSound" preload="auto">
+      <source src="bonk.mp3" type="audio/mpeg" />
+    </audio>
   </div>
 
   <script>
-    const attackBtn = document.getElementById("attackBtn");
-    const hpFill = document.getElementById("hpFill");
-    const hpText = document.getElementById("hpText");
-    const hpMini = document.getElementById("hpMini");
-    const winPopup = document.getElementById("winPopup");
-    const bigJoker = document.getElementById("bigJoker");
+    const scene = document.getElementById("scene");
+    const fatson = document.getElementById("fatson");
+    const joker = document.getElementById("joker");
+    const jokerWrap = document.getElementById("jokerWrap");
+    const arm = document.getElementById("arm");
+    const bonkText = document.getElementById("bonkText");
+    const flash = document.getElementById("flash");
+    const sound = document.getElementById("bonkSound");
 
-    let hp = 10;
-    const maxHp = 10;
-    let finished = false;
+    // stickers
+    const stickerEls = [
+      document.getElementById("sticker-tl"),
+      document.getElementById("sticker-tr"),
+      document.getElementById("sticker-bl"),
+      document.getElementById("sticker-br")
+    ];
 
-    function updateHp() {
-      const percent = (hp / maxHp) * 100;
-      hpFill.style.width = percent + "%";
-      hpText.textContent = `${hp} / ${maxHp} HP`;
-      hpMini.textContent = hp;
-    }
+    const stickerFiles = [
+      "stickers1.png",
+      "stickers2.png",
+      "stickers3.png",
+      "stickers4.png",
+      "stickers5.png",
+      "stickers6.png",
+      "stickers7.png",
+      "stickers8.png",
+      "stickers9.png",
+      "stickers10.png"
+    ];
 
-    function spawnConfetti(count = 150) {
-      const colors = ["#ff5fb2", "#7c4dff", "#ffffff", "#ffd166", "#6ee7b7"];
-      for (let i = 0; i < count; i++) {
-        const piece = document.createElement("div");
-        piece.className = "confetti";
-        piece.style.left = Math.random() * 100 + "vw";
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2.5 + Math.random() * 2.3) + "s";
-        piece.style.animationDelay = (Math.random() * 0.4) + "s";
-        piece.style.width = (7 + Math.random() * 6) + "px";
-        piece.style.height = (12 + Math.random() * 9) + "px";
-        document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 5600);
+    let idleAngle = -18;
+    let direction = 1;
+    let busy = false;
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
       }
+      return a;
     }
 
-    function hitEffect() {
-      bigJoker.classList.remove("hit");
-      void bigJoker.offsetWidth;
-      bigJoker.classList.add("hit");
-    }
+    function setStickerSet() {
+      const picks = shuffle(stickerFiles).slice(0, 4);
+      stickerEls.forEach((el) => el.classList.add("changing"));
 
-    function winBattle() {
-      finished = true;
-      attackBtn.disabled = true;
-      attackBtn.textContent = "JOKER DEFEATED 💥";
-      hp = 0;
-      updateHp();
-      spawnConfetti(180);
       setTimeout(() => {
-        winPopup.classList.add("show");
-      }, 180);
+        stickerEls.forEach((el, i) => {
+          el.src = picks[i];
+        });
+      }, 140);
+
+      setTimeout(() => {
+        stickerEls.forEach((el) => el.classList.remove("changing"));
+      }, 220);
     }
 
-    attackBtn.addEventListener("click", () => {
-      if (finished) return;
-      if (hp <= 0) return;
+    function startStickerCycle() {
+      setStickerSet();
+      setInterval(setStickerSet, 3200);
+    }
 
-      hp -= 1;
-      hitEffect();
-      updateHp();
-
-      if (hp <= 0) {
-        winBattle();
+    function safePlay(audio) {
+      audio.currentTime = 0;
+      const p = audio.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(() => {});
       }
+    }
+
+    function placeArm() {
+      const fat = fatson.getBoundingClientRect();
+      const jokerBox = jokerWrap.getBoundingClientRect();
+      const sceneBox = scene.getBoundingClientRect();
+
+      const crowbarWidth = Math.min(window.innerWidth * 0.27, 220);
+
+      const anchorX = fat.left - sceneBox.left + fat.width * 0.82;
+      const anchorY = fat.top - sceneBox.top + fat.height * 0.46;
+
+      const targetX = jokerBox.left - sceneBox.left + jokerBox.width * 0.18;
+      const targetY = jokerBox.top - sceneBox.top + jokerBox.height * 0.5;
+
+      const dx = targetX - anchorX;
+      const dy = targetY - anchorY;
+      const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+      arm.style.left = anchorX + "px";
+      arm.style.top = anchorY + "px";
+      arm.style.width = crowbarWidth + "px";
+      arm.dataset.baseAngle = angle;
+      arm.style.transform = `rotate(${angle + idleAngle}deg)`;
+
+      bonkText.style.left = (jokerBox.left - sceneBox.left + jokerBox.width * 0.08) + "px";
+      bonkText.style.top = (jokerBox.top - sceneBox.top - 24) + "px";
+    }
+
+    function idleSwing() {
+      if (!busy) {
+        const base = parseFloat(arm.dataset.baseAngle || "0");
+        idleAngle += 0.35 * direction;
+
+        if (idleAngle > -8) direction = -1;
+        if (idleAngle < -18) direction = 1;
+
+        arm.style.transform = `rotate(${base + idleAngle}deg)`;
+      }
+
+      requestAnimationFrame(idleSwing);
+    }
+
+    function hit() {
+      if (busy) return;
+      busy = true;
+
+      const base = parseFloat(arm.dataset.baseAngle || "0");
+
+      arm.style.transition = "transform 0.1s ease-out";
+      arm.style.transform = `rotate(${base - 26}deg)`;
+
+      setTimeout(() => {
+        arm.style.transform = `rotate(${base + 4}deg)`;
+
+        joker.classList.add("hit");
+        joker.style.transform = "translateX(12px) scale(0.97)";
+        joker.src = "joker2.png";
+
+        bonkText.classList.add("show");
+        flash.style.opacity = "1";
+        scene.classList.add("shake");
+
+        safePlay(sound);
+      }, 110);
+
+      setTimeout(() => {
+        flash.style.opacity = "0";
+        joker.style.transform = "translateX(0) scale(1)";
+        joker.classList.remove("hit");
+        joker.src = "joker.png";
+        scene.classList.remove("shake");
+      }, 300);
+
+      setTimeout(() => {
+        arm.style.transition = "transform 0.24s ease-in-out";
+        arm.style.transform = `rotate(${base - 12}deg)`;
+        bonkText.classList.remove("show");
+      }, 320);
+
+      setTimeout(() => {
+        idleAngle = -12;
+        busy = false;
+      }, 520);
+    }
+
+    window.addEventListener("load", () => {
+      startStickerCycle();
+      placeArm();
+      idleSwing();
     });
 
-    updateHp();
+    window.addEventListener("resize", placeArm);
+
+    document.body.addEventListener("click", hit);
+    document.body.addEventListener("touchstart", hit, { passive: true });
   </script>
 </body>
 </html>
