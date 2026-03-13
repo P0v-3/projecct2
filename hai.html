@@ -1,197 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Birthday Swing Hit</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fatson Bonks Joker</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    body {
-      background: #00a782;
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
+body{
+    margin:0;
+    background:#00a782;
+    height:100vh;
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+}
 
-    .scene {
-      position: relative;
-      width: 90vw;
-      max-width: 700px;
-      height: 70vh;
-    }
+.scene{
+    position:relative;
+    width:100vw;
+    height:100vh;
+}
 
-    /* left image */
-    .img1 {
-      position: absolute;
-      width: 28vw;
-      max-width: 180px;
-      left: 0;
-      top: 45%;
-      transform: translateY(-50%);
-      border-radius: 12px;
-      z-index: 1;
-    }
+/* FATSON */
+.fatson{
+    position:absolute;
+    left:5%;
+    top:50%;
+    transform:translateY(-50%);
+    width:250px;
+    z-index:3;
+    border-radius:20px;
+}
 
-    /* right image (target) */
-    .img2 {
-      position: absolute;
-      width: 28vw;
-      max-width: 180px;
-      right: 0;
-      top: 45%;
-      transform: translateY(-50%);
-      z-index: 2;
-      border-radius: 12px;
-      transition: transform 0.12s ease;
-    }
+/* JOKER */
+.joker{
+    position:absolute;
+    right:5%;
+    top:50%;
+    transform:translateY(-50%);
+    width:250px;
+    border-radius:20px;
+    z-index:2;
+}
 
-    /* swinger wrapper */
-    .swing-wrap {
-      position: absolute;
-      left: 50%;
-      top: 4%;
-      width: 160px;
-      height: 280px;
-      transform: translateX(-50%);
-      transform-origin: top center;
-      z-index: 3;
-    }
+/* ARM / SWING */
+.arm{
+    position:absolute;
+    left:230px;
+    top:42%;
+    width:200px;
+    height:200px;
+    transform-origin:20px 20px;
+    z-index:4;
+}
 
-    .rope {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      width: 4px;
-      height: 110px;
-      background: #ffffffcc;
-      transform: translateX(-50%);
-      border-radius: 3px;
-    }
+/* CROWBAR */
+.crowbar{
+    width:200px;
+}
 
-    .img3 {
-      position: absolute;
-      left: 50%;
-      top: 100px;
-      width: 34vw;
-      max-width: 210px;
-      transform: translateX(-50%);
-      border-radius: 12px;
-      display: block;
-    }
+/* HINT */
+.hint{
+    position:absolute;
+    bottom:20px;
+    left:50%;
+    transform:translateX(-50%);
+    background:rgba(0,0,0,0.2);
+    color:white;
+    padding:10px 18px;
+    border-radius:40px;
+}
 
-    .hint {
-      position: fixed;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.18);
-      color: white;
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 14px;
-    }
-  </style>
+</style>
 </head>
+
+
 <body>
-  <div class="scene">
-    <img
-      class="img1"
-      src="https://preview.redd.it/freaky-joker-joker-tongue-out-manually-cleaned-up-crop-in-v0-3qegwopj2feg1.png?width=640&crop=smart&auto=webp&s=a6fd105db2b724f08340d512f31e7d0012427eaa"
-      alt="Left image"
-      id="img1"
-    />
 
-    <img
-      class="img2"
-      src="https://fatson-toddplushies.com/wp-content/uploads/2025/11/Fat-Jason-Todd-Plush-bg-1762948768-300x300.png"
-      alt="Target image"
-      id="img2"
-    />
+<div class="scene">
 
-    <div class="swing-wrap" id="swingWrap">
-      <div class="rope"></div>
+<img src="fatson.png" class="fatson">
 
-      <!-- Replace with your actual swinger image -->
-      <img
-        class="img3"
-        src="img3.png"
-        alt="Swinging image"
-        id="img3"
-      />
-    </div>
-  </div>
+<img src="joker.png" class="joker" id="joker">
 
-  <!-- Replace with your actual sound file -->
-  <audio id="bonk" src="bonk.mp3" preload="auto"></audio>
+<div class="arm" id="arm">
+<img src="crowbar.png" class="crowbar">
+</div>
 
-  <div class="hint">tap anywhere to bonk</div>
+<div class="hint">click anywhere</div>
 
-  <script>
-    const swingWrap = document.getElementById("swingWrap");
-    const target = document.getElementById("img2");
-    const bonk = document.getElementById("bonk");
+<audio id="bonk">
+<source src="bonk.mp3" type="audio/mpeg">
+</audio>
 
-    let angle = -35;
-    let speed = 1.2;
-    let direction = 1;
-    let isForcedHit = false;
+</div>
 
-    const minAngle = -35;
-    const maxAngle = 35;
 
-    function animate() {
-      if (!isForcedHit) {
+<script>
+
+const arm = document.getElementById("arm");
+const joker = document.getElementById("joker");
+const bonk = document.getElementById("bonk");
+
+let angle = -20;
+let direction = 1;
+let speed = 0.5;
+
+let busy = false;
+
+/* IDLE SWING */
+function idleSwing(){
+
+    if(!busy){
+
         angle += speed * direction;
 
-        if (angle >= maxAngle) {
-          angle = maxAngle;
-          direction = -1;
-        }
+        if(angle > 10) direction = -1;
+        if(angle < -20) direction = 1;
 
-        if (angle <= minAngle) {
-          angle = minAngle;
-          direction = 1;
-        }
-      }
-
-      swingWrap.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-      requestAnimationFrame(animate);
+        arm.style.transform = "rotate(" + angle + "deg)";
     }
 
-    function bonkTarget() {
-      bonk.currentTime = 0;
-      bonk.play().catch(() => {});
+    requestAnimationFrame(idleSwing);
+}
 
-      target.style.transform = "translateY(-50%) scale(1.08)";
-      setTimeout(() => {
-        target.style.transform = "translateY(-50%) scale(1)";
-      }, 120);
-    }
+idleSwing();
 
-    document.body.addEventListener("click", () => {
-      if (isForcedHit) return;
 
-      isForcedHit = true;
-      angle = 70;
-      swingWrap.style.transform = `translateX(-50%) rotate(${angle}deg)`;
-      bonkTarget();
+/* BONK HIT */
 
-      setTimeout(() => {
-        angle = 20;
-        direction = -1;
-        isForcedHit = false;
-      }, 180);
-    });
+function bonkHit(){
 
-    requestAnimationFrame(animate);
-  </script>
+if(busy) return;
+
+busy = true;
+
+bonk.currentTime = 0;
+bonk.play();
+
+arm.style.transition="transform 0.15s";
+arm.style.transform="rotate(60deg)";
+
+joker.style.transition="transform 0.1s";
+joker.style.transform="translateY(-50%) translateX(20px)";
+
+setTimeout(()=>{
+
+arm.style.transition="transform 0.3s";
+arm.style.transform="rotate(-10deg)";
+
+joker.style.transform="translateY(-50%)";
+
+},200);
+
+setTimeout(()=>{
+busy=false;
+},500);
+
+}
+
+
+document.body.addEventListener("click", bonkHit);
+
+</script>
+
 </body>
 </html>
