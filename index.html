@@ -1,388 +1,286 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HAPPY BIRTHDAY TWIN!!!!!</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HAPPY BIRTHDAY TWIN!!!!!</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{box-sizing:border-box}
 
-    :root {
-      --bg1: #b83312;
-      --bg2: #a4947e;
-      --paper: rgba(255, 250, 244, 0.88);
-      --ink: #4a3f39;
-      --soft: #6f6159;
-      --accent: #8e6a74;
-      --accent2: #7f96a8;
-      --line: rgba(95, 78, 69, 0.15);
-      --shadow: rgba(80, 63, 53, 0.16);
-    }
+:root{
+--bg1:#b83312;
+--bg2:#a4947e;
+--paper:rgba(255,250,244,.88);
+--ink:#4a3f39;
+--soft:#6f6159;
+--accent:#8e6a74;
+--accent2:#7f96a8;
+--line:rgba(95,78,69,.15);
+--shadow:rgba(80,63,53,.16);
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 18px;
-      font-family: "Trebuchet MS", Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(127, 150, 168, 0.18), transparent 26%),
-        radial-gradient(circle at bottom right, rgba(142, 106, 116, 0.16), transparent 24%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
-      position: relative;
-    }
+body{
+margin:0;
+min-height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:18px;
+font-family:"Trebuchet MS",Arial,sans-serif;
+background:
+radial-gradient(circle at top left,rgba(127,150,168,.18),transparent 26%),
+radial-gradient(circle at bottom right,rgba(142,106,116,.16),transparent 24%),
+linear-gradient(135deg,var(--bg1),var(--bg2));
+position:relative;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background:
-        repeating-linear-gradient(
-          0deg,
-          transparent 0px,
-          transparent 27px,
-          rgba(100, 85, 78, 0.04) 28px
-        );
-      opacity: 0.55;
-    }
+body::before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+repeating-linear-gradient(
+0deg,
+transparent 0px,
+transparent 27px,
+rgba(100,85,78,.04) 28px
+);
+opacity:.55;
+}
 
-    /* STICKERS - copied from hai style */
-    .sticker {
-      position: absolute;
-      z-index: 1;
-      width: clamp(62px, 10vw, 110px);
-      pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 8px 14px rgba(0,0,0,0.12));
-      opacity: 0.96;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-      animation: stickerFloat 2.4s ease-in-out infinite;
-    }
+/* stickers */
 
-    .sticker.changing {
-      opacity: 0.3;
-    }
+.sticker{
+position:absolute;
+z-index:1;
+width:clamp(62px,10vw,110px);
+pointer-events:none;
+user-select:none;
+filter:drop-shadow(0 8px 14px rgba(0,0,0,.12));
+opacity:.96;
+transition:opacity .35s ease,transform .35s ease;
+animation:stickerFloat 2.4s ease-in-out infinite;
+}
 
-    .sticker.tl { top: 10px; left: 10px; --rot: -8deg; --dx: -2px; --dy: 3px; }
-    .sticker.tr { top: 10px; right: 10px; --rot: 8deg; --dx: 2px; --dy: 2px; }
-    .sticker.bl { bottom: 10px; left: 10px; --rot: 6deg; --dx: -3px; --dy: -2px; }
-    .sticker.br { bottom: 10px; right: 10px; --rot: -6deg; --dx: 3px; --dy: -2px; }
+.sticker.changing{opacity:.3}
 
-    @keyframes stickerFloat {
-      0%   { transform: rotate(var(--rot)) translate(0px, 0px); }
-      25%  { transform: rotate(calc(var(--rot) - 1.2deg)) translate(var(--dx), var(--dy)); }
-      50%  { transform: rotate(calc(var(--rot) + 1deg)) translate(calc(var(--dx) * -0.5), calc(var(--dy) * -0.5)); }
-      75%  { transform: rotate(calc(var(--rot) - 0.8deg)) translate(calc(var(--dx) * 0.7), calc(var(--dy) * -0.4)); }
-      100% { transform: rotate(var(--rot)) translate(0px, 0px); }
-    }
+.sticker.tl{top:10px;left:10px;--rot:-8deg;--dx:-2px;--dy:3px}
+.sticker.tr{top:10px;right:10px;--rot:8deg;--dx:2px;--dy:2px}
+.sticker.bl{bottom:10px;left:10px;--rot:6deg;--dx:-3px;--dy:-2px}
+.sticker.br{bottom:10px;right:10px;--rot:-6deg;--dx:3px;--dy:-2px}
 
-    .card {
-      position: relative;
-      z-index: 2;
-      width: min(92vw, 560px);
-      background: var(--paper);
-      backdrop-filter: blur(8px);
-      border: 1.5px solid var(--line);
-      border-radius: 28px;
-      padding: 26px 18px 20px;
-      box-shadow:
-        0 18px 40px var(--shadow),
-        inset 0 1px 0 rgba(255,255,255,0.72);
-      overflow: hidden;
-    }
+@keyframes stickerFloat{
+0%{transform:rotate(var(--rot)) translate(0,0)}
+25%{transform:rotate(calc(var(--rot)-1.2deg)) translate(var(--dx),var(--dy))}
+50%{transform:rotate(calc(var(--rot)+1deg)) translate(calc(var(--dx)*-.5),calc(var(--dy)*-.5))}
+75%{transform:rotate(calc(var(--rot)-.8deg)) translate(calc(var(--dx)*.7),calc(var(--dy)*-.4))}
+100%{transform:rotate(var(--rot)) translate(0,0)}
+}
 
-    .card::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at top right, rgba(127,143,161,0.10), transparent 28%),
-        radial-gradient(circle at bottom left, rgba(138,90,98,0.08), transparent 26%);
-      pointer-events: none;
-    }
+.card{
+position:relative;
+z-index:2;
+width:min(92vw,560px);
+background:var(--paper);
+backdrop-filter:blur(8px);
+border:1.5px solid var(--line);
+border-radius:28px;
+padding:26px 18px 20px;
+box-shadow:0 18px 40px var(--shadow),inset 0 1px 0 rgba(255,255,255,.72);
+overflow:hidden;
+}
 
-    h1 {
-      position: relative;
-      margin: 6px 0 18px;
-      text-align: center;
-      color: var(--ink);
-      font-size: clamp(28px, 6vw, 40px);
-      line-height: 1.05;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-    }
+.card::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at top right,rgba(127,143,161,.10),transparent 28%),
+radial-gradient(circle at bottom left,rgba(138,90,98,.08),transparent 26%);
+pointer-events:none;
+}
 
-    .message-box {
-      position: relative;
-      background: rgba(255,255,255,0.62);
-      border: 1.5px solid rgba(90,72,63,0.12);
-      border-radius: 20px;
-      padding: 16px;
-      min-height: 120px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
-    }
+h1{
+margin:6px 0 18px;
+text-align:center;
+color:var(--ink);
+font-size:clamp(28px,6vw,40px);
+line-height:1.05;
+font-weight:800;
+letter-spacing:.4px;
+}
 
-    .message-box p {
-      margin: 0;
-      color: var(--soft);
-      font-size: 15px;
-      line-height: 1.7;
-      font-weight: 600;
-    }
+.message-box{
+background:rgba(255,255,255,.62);
+border:1.5px solid rgba(90,72,63,.12);
+border-radius:20px;
+padding:16px;
+min-height:120px;
+box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+}
 
-    .action-row {
-      display: flex;
-      justify-content: center;
-      margin-top: 18px;
-    }
+.message-box p{
+margin:0;
+color:var(--soft);
+font-size:15px;
+line-height:1.7;
+font-weight:600;
+}
 
-    .crowbar-btn {
-      border: 0;
-      background: linear-gradient(180deg, var(--accent2), var(--accent));
-      color: white;
-      border-radius: 18px;
-      width: 72px;
-      height: 62px;
-      font-size: 28px;
-      cursor: pointer;
-      box-shadow: 0 10px 22px rgba(127, 150, 168, 0.24);
-      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
-    }
+.action-row{
+display:flex;
+justify-content:center;
+margin-top:18px;
+}
 
-    .crowbar-btn:hover {
-      transform: translateY(-1px) scale(1.02);
-      box-shadow: 0 14px 26px rgba(127, 150, 168, 0.28);
-    }
+.crowbar-btn{
+border:0;
+background:linear-gradient(180deg,var(--accent2),var(--accent));
+color:white;
+border-radius:18px;
+width:72px;
+height:62px;
+font-size:28px;
+cursor:pointer;
+box-shadow:0 10px 22px rgba(127,150,168,.24);
+transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;
+}
 
-    .crowbar-btn:active {
-      transform: scale(0.97);
-      opacity: 0.92;
-    }
+.crowbar-btn:hover{
+transform:translateY(-1px) scale(1.02);
+box-shadow:0 14px 26px rgba(127,150,168,.28);
+}
 
-    .small-note {
-      margin-top: 12px;
-      text-align: center;
-      color: var(--soft);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.8px;
-      text-transform: lowercase;
-    }
+.crowbar-btn:active{
+transform:scale(.97);
+opacity:.92;
+}
 
-    .confetti {
-      position: fixed;
-      top: -12px;
-      width: 10px;
-      height: 16px;
-      opacity: 0.9;
-      z-index: 0;
-      animation: fall linear forwards;
-      border-radius: 999px;
-    }
+.small-note{
+margin-top:12px;
+text-align:center;
+color:var(--soft);
+font-size:12px;
+font-weight:700;
+letter-spacing:.8px;
+text-transform:lowercase;
+}
 
-    @keyframes fall {
-      from {
-        transform: translateY(-10vh) rotate(0deg);
-      }
-      to {
-        transform: translateY(115vh) rotate(720deg);
-      }
-    }
+.confetti{
+position:fixed;
+top:-12px;
+width:10px;
+height:16px;
+opacity:.9;
+z-index:0;
+animation:fall linear forwards;
+border-radius:999px;
+}
 
-    @media (max-width: 600px) {
-      .card {
-        padding: 22px 14px 18px;
-        border-radius: 24px;
-      }
-
-      .message-box {
-        min-height: 108px;
-        padding: 14px;
-      }
-
-      .message-box p {
-        font-size: 14px;
-      }
-    }
-  </style>
+@keyframes fall{
+from{transform:translateY(-10vh) rotate(0)}
+to{transform:translateY(115vh) rotate(720deg)}
+}
+</style>
 </head>
+
 <body>
-  <!-- stickers -->
-  <img class="sticker tl" id="sticker-tl" alt="">
-  <img class="sticker tr" id="sticker-tr" alt="">
-  <img class="sticker bl" id="sticker-bl" alt="">
-  <img class="sticker br" id="sticker-br" alt="">
 
-  <audio id="partyblower" src="partyblower.mp3" preload="auto"></audio>
-  <audio id="confettiSound" src="confetti.mp3" preload="auto"></audio>
+<img class="sticker tl" id="sticker-tl">
+<img class="sticker tr" id="sticker-tr">
+<img class="sticker bl" id="sticker-bl">
+<img class="sticker br" id="sticker-br">
 
-  <div class="card" id="birthdayCard">
-    <h1>HAPPY BIRTHDAY TWIN!! 🎂!</h1>
+<audio id="partyblower" src="partyblower.mp3"></audio>
+<audio id="confettiSound" src="confetti.mp3"></audio>
 
-    <div class="message-box">
-      <p>
-        TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
-        NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
-        GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
-        THE PINATA!!!! -@fizavocadoes 😼 ᵖˢ ᵗʰⁱˢ ᵗᵒᵒᵏ ᵐᵉ ⁶ ʰᵒᵘʳˢ ⁱᵗˢ ⁴ ᵃᵐ ᵒⁿ ¹⁴ᵗʰ ᵐᵃʳᶜʰ
-      </p>
-    </div>
+<div class="card">
+<h1>HAPPY BIRTHDAY TWIN!! 🎂!</h1>
 
-    <div class="action-row">
-      <button type="button" class="crowbar-btn" id="giftButton">🪓</button>
-    </div>
+<div class="message-box">
+<p>
+TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
+NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
+GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
+THE PINATA!!!! -@fizavocadoes 😼
+</p>
+</div>
 
-    <div class="small-note">tap the button</div>
-  </div>
+<div class="action-row">
+<button class="crowbar-btn" id="giftButton">🪓</button>
+</div>
 
-  <script>
-    const blower = document.getElementById("partyblower");
-    const confettiSound = document.getElementById("confettiSound");
-    const giftButton = document.getElementById("giftButton");
+<div class="small-note">tap the button</div>
+</div>
 
-    // stickers from hai
-    const stickerEls = [
-      document.getElementById("sticker-tl"),
-      document.getElementById("sticker-tr"),
-      document.getElementById("sticker-bl"),
-      document.getElementById("sticker-br")
-    ];
+<script>
 
-    const stickerFiles = [
-  "stickers1.png",
-  "stickers2.png",
-  "stickers3.png",
-  "stickers4.png",
-  "stickers5.png",
-  "stickers6.png",
-  "stickers7.png",
-  "stickers8.png",
-  "stickers9.png",
-  "stickers10.png",
-  "stickers11.png",
-  "stickers12.png",
-  "stickers13.png",
-  "stickers14.png",
-  "stickers15.png",
-  "stickers16.png",
-  "stickers17.png",
-  "stickers18.png",
-  "stickers19.png",
-  "stickers20.png",
-  "stickers21.png",
-  "stickers22.png",
-  "stickers23.png",
-  "stickers24.png"
+const stickerEls=[
+document.getElementById("sticker-tl"),
+document.getElementById("sticker-tr"),
+document.getElementById("sticker-bl"),
+document.getElementById("sticker-br")
 ];
 
-    let hasRedirected = false;
-    let introPlayed = false;
-    let redirectStarted = false;
-    let redirectTimer = null;
+const stickerFiles=[
+"stickers1.png","stickers2.png","stickers3.png","stickers4.png",
+"stickers5.png","stickers6.png","stickers7.png","stickers8.png",
+"stickers9.png","stickers10.png","stickers11.png","stickers12.png",
+"stickers13.png","stickers14.png","stickers15.png","stickers16.png",
+"stickers17.png","stickers18.png","stickers19.png","stickers20.png",
+"stickers21.png","stickers22.png","stickers23.png","stickers24.png"
+];
 
-    function shuffle(arr) {
-      const a = [...arr];
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
+function preloadStickers(list){
+return Promise.all(list.map(src=>{
+return new Promise(res=>{
+const img=new Image();
+img.src=src;
+img.onload=res;
+img.onerror=res;
+});
+}));
+}
 
-    function setStickerSet() {
-      const picks = shuffle(stickerFiles).slice(0, 4);
-      stickerEls.forEach((el) => el.classList.add("changing"));
+function shuffle(arr){
+const a=[...arr];
+for(let i=a.length-1;i>0;i--){
+const j=Math.floor(Math.random()*(i+1));
+[a[i],a[j]]=[a[j],a[i]];
+}
+return a;
+}
 
-setTimeout(() => {
-  stickerEls.forEach((el, i) => {
-    el.src = picks[i];
-  });
-}, 100);
+function setStickerSet(){
+const picks=shuffle(stickerFiles).slice(0,4);
 
-setTimeout(() => {
-  stickerEls.forEach((el) => el.classList.remove("changing"));
-}, 260);
-    function startStickerCycle() {
-      setStickerSet();
-      setInterval(setStickerSet, 3200);
-    }
+stickerEls.forEach(el=>el.classList.add("changing"));
 
-    function spawnConfetti(count = 90) {
-      const colors = ["#8e6a74", "#7f96a8", "#ffffff", "#d8c3a5", "#6f6159"];
-      for (let i = 0; i < count; i++) {
-        const piece = document.createElement("div");
-        piece.className = "confetti";
-        piece.style.left = Math.random() * 100 + "vw";
-        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
-        piece.style.animationDuration = (2.8 + Math.random() * 2.2) + "s";
-        piece.style.animationDelay = (Math.random() * 0.7) + "s";
-        piece.style.width = (7 + Math.random() * 5) + "px";
-        piece.style.height = (12 + Math.random() * 8) + "px";
-        document.body.appendChild(piece);
-        setTimeout(() => piece.remove(), 6000);
-      }
-    }
+setTimeout(()=>{
+stickerEls.forEach((el,i)=>{
+el.src=picks[i];
+});
+},100);
 
-    function playIntroEffects() {
-      if (introPlayed) return;
-      introPlayed = true;
+setTimeout(()=>{
+stickerEls.forEach(el=>el.classList.remove("changing"));
+},260);
+}
 
-      spawnConfetti(110);
+function startStickerCycle(){
+setStickerSet();
+setInterval(setStickerSet,3200);
+}
 
-      blower.currentTime = 0;
-      confettiSound.currentTime = 0;
+window.addEventListener("load",async()=>{
+await preloadStickers(stickerFiles);
+startStickerCycle();
+});
 
-      blower.play().catch(() => {});
-      setTimeout(() => {
-        confettiSound.play().catch(() => {});
-      }, 180);
-    }
+</script>
 
-    function goNext() {
-      if (hasRedirected) return;
-      hasRedirected = true;
-      window.location.href = "hai.html";
-    }
-
-    window.addEventListener("load", () => {
-      startStickerCycle();
-      playIntroEffects();
-
-      setTimeout(() => {
-        if (!introPlayed) playIntroEffects();
-      }, 150);
-    });
-
-    document.addEventListener("click", playIntroEffects, { once: true });
-
-    giftButton.addEventListener("click", (e) => {
-      e.stopPropagation();
-
-      if (redirectStarted) {
-        if (redirectTimer) clearTimeout(redirectTimer);
-        goNext();
-        return;
-      }
-
-      redirectStarted = true;
-
-      blower.currentTime = 0;
-      confettiSound.currentTime = 0;
-
-      blower.play().catch(() => {});
-      confettiSound.play().catch(() => {});
-
-      redirectTimer = setTimeout(() => {
-        goNext();
-      }, 4500);
-    });
-  </script>
 </body>
 </html>
