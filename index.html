@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>HAPPY BIRTHDAY TWIN!!!!!</title>
 
 <style>
@@ -33,51 +33,29 @@ background:
 radial-gradient(circle at top left,rgba(127,150,168,.18),transparent 26%),
 radial-gradient(circle at bottom right,rgba(142,106,116,.16),transparent 24%),
 linear-gradient(135deg,var(--bg1),var(--bg2));
-position:relative;
 }
-
-body::before{
-content:"";
-position:fixed;
-inset:0;
-pointer-events:none;
-background:
-repeating-linear-gradient(
-0deg,
-transparent 0px,
-transparent 27px,
-rgba(100,85,78,.04) 28px
-);
-opacity:.55;
-}
-
-/* stickers */
 
 .sticker{
 position:absolute;
 z-index:1;
 width:clamp(62px,10vw,110px);
 pointer-events:none;
-user-select:none;
 filter:drop-shadow(0 8px 14px rgba(0,0,0,.12));
-opacity:.96;
-transition:opacity .35s ease,transform .35s ease;
-animation:stickerFloat 2.4s ease-in-out infinite;
+transition:opacity .35s ease;
+animation:float 2.4s ease-in-out infinite;
 }
 
 .sticker.changing{opacity:.3}
 
-.sticker.tl{top:10px;left:10px;--rot:-8deg;--dx:-2px;--dy:3px}
-.sticker.tr{top:10px;right:10px;--rot:8deg;--dx:2px;--dy:2px}
-.sticker.bl{bottom:10px;left:10px;--rot:6deg;--dx:-3px;--dy:-2px}
-.sticker.br{bottom:10px;right:10px;--rot:-6deg;--dx:3px;--dy:-2px}
+.sticker.tl{top:10px;left:10px}
+.sticker.tr{top:10px;right:10px}
+.sticker.bl{bottom:10px;left:10px}
+.sticker.br{bottom:10px;right:10px}
 
-@keyframes stickerFloat{
-0%{transform:rotate(var(--rot)) translate(0,0)}
-25%{transform:rotate(calc(var(--rot)-1.2deg)) translate(var(--dx),var(--dy))}
-50%{transform:rotate(calc(var(--rot)+1deg)) translate(calc(var(--dx)*-.5),calc(var(--dy)*-.5))}
-75%{transform:rotate(calc(var(--rot)-.8deg)) translate(calc(var(--dx)*.7),calc(var(--dy)*-.4))}
-100%{transform:rotate(var(--rot)) translate(0,0)}
+@keyframes float{
+0%{transform:translate(0,0)}
+50%{transform:translate(3px,-3px)}
+100%{transform:translate(0,0)}
 }
 
 .card{
@@ -85,41 +63,22 @@ position:relative;
 z-index:2;
 width:min(92vw,560px);
 background:var(--paper);
-backdrop-filter:blur(8px);
-border:1.5px solid var(--line);
 border-radius:28px;
 padding:26px 18px 20px;
-box-shadow:0 18px 40px var(--shadow),inset 0 1px 0 rgba(255,255,255,.72);
-overflow:hidden;
-}
-
-.card::before{
-content:"";
-position:absolute;
-inset:0;
-background:
-radial-gradient(circle at top right,rgba(127,143,161,.10),transparent 28%),
-radial-gradient(circle at bottom left,rgba(138,90,98,.08),transparent 26%);
-pointer-events:none;
+box-shadow:0 18px 40px var(--shadow);
 }
 
 h1{
-margin:6px 0 18px;
 text-align:center;
 color:var(--ink);
 font-size:clamp(28px,6vw,40px);
-line-height:1.05;
 font-weight:800;
-letter-spacing:.4px;
 }
 
 .message-box{
-background:rgba(255,255,255,.62);
-border:1.5px solid rgba(90,72,63,.12);
+background:rgba(255,255,255,.7);
 border-radius:20px;
 padding:16px;
-min-height:120px;
-box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
 }
 
 .message-box p{
@@ -145,18 +104,6 @@ width:72px;
 height:62px;
 font-size:28px;
 cursor:pointer;
-box-shadow:0 10px 22px rgba(127,150,168,.24);
-transition:transform .12s ease,box-shadow .12s ease,opacity .12s ease;
-}
-
-.crowbar-btn:hover{
-transform:translateY(-1px) scale(1.02);
-box-shadow:0 14px 26px rgba(127,150,168,.28);
-}
-
-.crowbar-btn:active{
-transform:scale(.97);
-opacity:.92;
 }
 
 .small-note{
@@ -165,8 +112,6 @@ text-align:center;
 color:var(--soft);
 font-size:12px;
 font-weight:700;
-letter-spacing:.8px;
-text-transform:lowercase;
 }
 
 .confetti{
@@ -203,9 +148,8 @@ to{transform:translateY(115vh) rotate(720deg)}
 <div class="message-box">
 <p>
 TWIN YOUR 14 FINALLY(took you long enough). WOW HAPPY BIRTHDAY IM SORRY I CANT BE THERE BUT HOPEFULLY
-NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO, YOUR RECS ARE SO
-GOOOOOOD BTW I HOPE THAT YOU HAVE A BETTER LIFE (a life where trump & netanyahu dont exist) ENJOYY
-THE PINATA!!!! -@fizavocadoes 😼
+NEXT TIME!!! I HOPE YOU KNOW YOU'RE A WONDERFUL FRIEND, AND REALLLLY FUN TO TALK TO.
+ENJOY THE PINATA!!!! -@fizavocadoes
 </p>
 </div>
 
@@ -217,6 +161,10 @@ THE PINATA!!!! -@fizavocadoes 😼
 </div>
 
 <script>
+
+const blower=document.getElementById("partyblower");
+const confettiSound=document.getElementById("confettiSound");
+const giftButton=document.getElementById("giftButton");
 
 const stickerEls=[
 document.getElementById("sticker-tl"),
@@ -233,6 +181,9 @@ const stickerFiles=[
 "stickers17.png","stickers18.png","stickers19.png","stickers20.png",
 "stickers21.png","stickers22.png","stickers23.png","stickers24.png"
 ];
+
+let redirectStarted=false;
+let redirectTimer=null;
 
 function preloadStickers(list){
 return Promise.all(list.map(src=>{
@@ -274,6 +225,51 @@ function startStickerCycle(){
 setStickerSet();
 setInterval(setStickerSet,3200);
 }
+
+function spawnConfetti(count=90){
+const colors=["#8e6a74","#7f96a8","#ffffff","#d8c3a5","#6f6159"];
+
+for(let i=0;i<count;i++){
+const piece=document.createElement("div");
+piece.className="confetti";
+
+piece.style.left=Math.random()*100+"vw";
+piece.style.background=colors[Math.floor(Math.random()*colors.length)];
+piece.style.animationDuration=(3+Math.random()*2)+"s";
+
+document.body.appendChild(piece);
+
+setTimeout(()=>piece.remove(),6000);
+}
+}
+
+function goNext(){
+window.location.href="hai.html";
+}
+
+giftButton.addEventListener("click",()=>{
+
+if(redirectStarted){
+if(redirectTimer)clearTimeout(redirectTimer);
+goNext();
+return;
+}
+
+redirectStarted=true;
+
+spawnConfetti(110);
+
+blower.currentTime=0;
+confettiSound.currentTime=0;
+
+blower.play().catch(()=>{});
+confettiSound.play().catch(()=>{});
+
+redirectTimer=setTimeout(()=>{
+goNext();
+},4500);
+
+});
 
 window.addEventListener("load",async()=>{
 await preloadStickers(stickerFiles);
