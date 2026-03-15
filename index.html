@@ -300,17 +300,15 @@
       const picks = shuffle(stickerFiles).slice(0, 4);
       stickerEls.forEach((el) => el.classList.add("changing"));
 
-      setTimeout(() => {
-        stickerEls.forEach((el, i) => {
-          el.src = picks[i];
-        });
-      }, 140);
+setTimeout(() => {
+  stickerEls.forEach((el, i) => {
+    el.src = picks[i];
+  });
+}, 100);
 
-      setTimeout(() => {
-        stickerEls.forEach((el) => el.classList.remove("changing"));
-      }, 220);
-    }
-
+setTimeout(() => {
+  stickerEls.forEach((el) => el.classList.remove("changing"));
+}, 260);
     function startStickerCycle() {
       setStickerSet();
       setInterval(setStickerSet, 3200);
