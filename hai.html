@@ -316,6 +316,18 @@
   "stickers23.png",
   "stickers24.png"
 ];
+    function preloadStickers(list) {
+  return Promise.all(
+    list.map(src => {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.src = src;
+        img.onload = resolve;
+        img.onerror = resolve;
+      });
+    })
+  );
+}
     let idleAngle = -18;
     let direction = 1;
     let busy = false;
@@ -346,7 +358,7 @@
 
     function startStickerCycle() {
       setStickerSet();
-      setInterval(setStickerSet, 3200);
+      setInterval(setStickerSet, 2500);
     }
 
     function safePlay(audio) {
@@ -441,11 +453,12 @@
       }, 520);
     }
 
-    window.addEventListener("load", () => {
-      startStickerCycle();
-      placeArm();
-      idleSwing();
-    });
+   window.addEventListener("load", async () => {
+  await preloadStickers(stickerFiles);
+  startStickerCycle();
+  placeArm();
+  idleSwing();
+});
 
     window.addEventListener("resize", placeArm);
 
