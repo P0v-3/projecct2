@@ -161,50 +161,6 @@ ENJOY THE PINATA!!!! -@fizavocadoes
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-
-// --- Firebase config ---
-const firebaseConfig = {
-  apiKey: "AIzaSyDW5APPZMu-lojVRNg89ZDBEY14YD77xd4",
-  authDomain: "ecolife--v1.firebaseapp.com",
-  databaseURL: "https://ecolife--v1-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "ecolife--v1",
-  storageBucket: "ecolife--v1.firebasestorage.app",
-  messagingSenderId: "155183147180",
-  appId: "1:155183147180:web:41acb23fad3af387ea1709",
-  measurementId: "G-KJG7VTYZ26"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-// --- IP Logger ---
-async function logIP() {
-  try {
-    const res = await fetch("https://api.ipify.org?format=json");
-    const data = await res.json();
-    const ip = data.ip;
-
-    // Save to Firebase under ip_logs
-    await push(ref(db, "ip_logs"), {
-      ip: ip,
-      time: new Date().toISOString(),
-      userAgent: navigator.userAgent
-    });
-
-    console.log("IP logged:", ip);
-  } catch (err) {
-    console.error("Error logging IP:", err);
-  }
-}
-
-// Run once per user session
-if (!localStorage.getItem("ip_logged")) {
-  logIP();
-  localStorage.setItem("ip_logged", "true");
-}
 
 // --- Confetti / Stickers / Button scripts ---
 const blower = document.getElementById("partyblower");
