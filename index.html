@@ -164,7 +164,7 @@ ENJOY THE PINATA!!!! -@fizavocadoes
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// Your Firebase config
+// --- Firebase config ---
 const firebaseConfig = {
   apiKey: "AIzaSyDW5APPZMu-lojVRNg89ZDBEY14YD77xd4",
   authDomain: "ecolife--v1.firebaseapp.com",
@@ -180,14 +180,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// 🔥 IP Logger
+// --- IP Logger ---
 async function logIP() {
   try {
+    // Fetch public IP
     const res = await fetch("https://api.ipify.org?format=json");
     const data = await res.json();
-
     const ip = data.ip;
 
+    // Save to Firebase under ip_logs
     await push(ref(db, "ip_logs"), {
       ip: ip,
       time: new Date().toISOString(),
@@ -200,129 +201,115 @@ async function logIP() {
   }
 }
 
-// Run once per user
+// Run once per user session
 if (!localStorage.getItem("ip_logged")) {
   logIP();
   localStorage.setItem("ip_logged", "true");
 }
-</script>
-<script>
-  
 
-const blower=document.getElementById("partyblower");
-const confettiSound=document.getElementById("confettiSound");
-const giftButton=document.getElementById("giftButton");
+// --- Confetti / Stickers / Button scripts ---
+const blower = document.getElementById("partyblower");
+const confettiSound = document.getElementById("confettiSound");
+const giftButton = document.getElementById("giftButton");
 
-const stickerEls=[
-document.getElementById("sticker-tl"),
-document.getElementById("sticker-tr"),
-document.getElementById("sticker-bl"),
-document.getElementById("sticker-br")
+const stickerEls = [
+  document.getElementById("sticker-tl"),
+  document.getElementById("sticker-tr"),
+  document.getElementById("sticker-bl"),
+  document.getElementById("sticker-br")
 ];
 
-const stickerFiles=[
-"stickers1.png","stickers2.png","stickers3.png","stickers4.png",
-"stickers5.png","stickers6.png","stickers7.png","stickers8.png",
-"stickers9.png","stickers10.png","stickers11.png","stickers12.png",
-"stickers13.png","stickers14.png","stickers15.png","stickers16.png",
-"stickers17.png","stickers18.png","stickers19.png","stickers20.png",
-"stickers21.png","stickers22.png","stickers23.png","stickers24.png"
+const stickerFiles = [
+  "stickers1.png","stickers2.png","stickers3.png","stickers4.png",
+  "stickers5.png","stickers6.png","stickers7.png","stickers8.png",
+  "stickers9.png","stickers10.png","stickers11.png","stickers12.png",
+  "stickers13.png","stickers14.png","stickers15.png","stickers16.png",
+  "stickers17.png","stickers18.png","stickers19.png","stickers20.png",
+  "stickers21.png","stickers22.png","stickers23.png","stickers24.png"
 ];
 
-let redirectStarted=false;
-let redirectTimer=null;
+let redirectStarted = false;
+let redirectTimer = null;
 
 function preloadStickers(list){
-return Promise.all(list.map(src=>{
-return new Promise(res=>{
-const img=new Image();
-img.src=src;
-img.onload=res;
-img.onerror=res;
-});
-}));
+  return Promise.all(list.map(src=>{
+    return new Promise(res=>{
+      const img = new Image();
+      img.src = src;
+      img.onload = res;
+      img.onerror = res;
+    });
+  }));
 }
 
 function shuffle(arr){
-const a=[...arr];
-for(let i=a.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[a[i],a[j]]=[a[j],a[i]];
-}
-return a;
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
 }
 
 function setStickerSet(){
-const picks=shuffle(stickerFiles).slice(0,4);
+  const picks = shuffle(stickerFiles).slice(0,4);
 
-stickerEls.forEach(el=>el.classList.add("changing"));
+  stickerEls.forEach(el => el.classList.add("changing"));
 
-setTimeout(()=>{
-stickerEls.forEach((el,i)=>{
-el.src=picks[i];
-});
-},100);
+  setTimeout(()=>{
+    stickerEls.forEach((el,i) => el.src = picks[i]);
+  },100);
 
-setTimeout(()=>{
-stickerEls.forEach(el=>el.classList.remove("changing"));
-},260);
+  setTimeout(()=>{
+    stickerEls.forEach(el => el.classList.remove("changing"));
+  },260);
 }
 
 function startStickerCycle(){
-setStickerSet();
-setInterval(setStickerSet,3200);
+  setStickerSet();
+  setInterval(setStickerSet,3200);
 }
 
 function spawnConfetti(count=90){
-const colors=["#8e6a74","#7f96a8","#ffffff","#d8c3a5","#6f6159"];
-
-for(let i=0;i<count;i++){
-const piece=document.createElement("div");
-piece.className="confetti";
-
-piece.style.left=Math.random()*100+"vw";
-piece.style.background=colors[Math.floor(Math.random()*colors.length)];
-piece.style.animationDuration=(3+Math.random()*2)+"s";
-
-document.body.appendChild(piece);
-
-setTimeout(()=>piece.remove(),6000);
-}
+  const colors = ["#8e6a74","#7f96a8","#ffffff","#d8c3a5","#6f6159"];
+  for(let i=0;i<count;i++){
+    const piece = document.createElement("div");
+    piece.className = "confetti";
+    piece.style.left = Math.random()*100+"vw";
+    piece.style.background = colors[Math.floor(Math.random()*colors.length)];
+    piece.style.animationDuration = (3+Math.random()*2)+"s";
+    document.body.appendChild(piece);
+    setTimeout(()=>piece.remove(),6000);
+  }
 }
 
 function goNext(){
-window.location.href="hai.html";
+  window.location.href = "hai.html";
 }
 
 giftButton.addEventListener("click",()=>{
+  if(redirectStarted){
+    if(redirectTimer) clearTimeout(redirectTimer);
+    goNext();
+    return;
+  }
 
-if(redirectStarted){
-if(redirectTimer)clearTimeout(redirectTimer);
-goNext();
-return;
-}
+  redirectStarted = true;
+  spawnConfetti(110);
 
-redirectStarted=true;
+  blower.currentTime = 0;
+  confettiSound.currentTime = 0;
 
-spawnConfetti(110);
+  blower.play().catch(()=>{});
+  confettiSound.play().catch(()=>{});
 
-blower.currentTime=0;
-confettiSound.currentTime=0;
-
-blower.play().catch(()=>{});
-confettiSound.play().catch(()=>{});
-
-redirectTimer=setTimeout(()=>{
-goNext();
-},4500);
-
+  redirectTimer = setTimeout(goNext, 4500);
 });
 
-window.addEventListener("load",async()=>{
-await preloadStickers(stickerFiles);
-startStickerCycle();
+window.addEventListener("load", async ()=>{
+  await preloadStickers(stickerFiles);
+  startStickerCycle();
 });
-
 </script>
 
 </body>
