@@ -183,7 +183,6 @@ const db = getDatabase(app);
 // --- IP Logger ---
 async function logIP() {
   try {
-    // Fetch public IP
     const res = await fetch("https://api.ipify.org?format=json");
     const data = await res.json();
     const ip = data.ip;
@@ -225,7 +224,7 @@ const stickerFiles = [
   "stickers9.png","stickers10.png","stickers11.png","stickers12.png",
   "stickers13.png","stickers14.png","stickers15.png","stickers16.png",
   "stickers17.png","stickers18.png","stickers19.png","stickers20.png",
-  "stickers21.png","stickers22.png","stickers23.png","stickers24.png"
+  "stickers21.png","stickers23.png","stickers24.png" // <-- removed stickers22.png
 ];
 
 let redirectStarted = false;
@@ -311,6 +310,5 @@ window.addEventListener("load", async ()=>{
   startStickerCycle();
 });
 </script>
-
 </body>
 </html>
